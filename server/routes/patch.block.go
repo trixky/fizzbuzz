@@ -8,7 +8,7 @@ import (
 
 	"fizzbuzz.com/v1/database"
 	"fizzbuzz.com/v1/json_struct"
-	"fizzbuzz.com/v1/middleware"
+	"fizzbuzz.com/v1/middlewares"
 	"fizzbuzz.com/v1/models"
 	"gorm.io/gorm"
 )
@@ -21,7 +21,7 @@ func Block(res http.ResponseWriter, req *http.Request) {
 
 	res.Header().Set("Content-Type", "application/json")
 
-	pseudo, authentified := middleware.Middleware_token(res, req)
+	pseudo, authentified := middlewares.Middleware_token(res, req)
 	if !authentified {
 		return
 	}

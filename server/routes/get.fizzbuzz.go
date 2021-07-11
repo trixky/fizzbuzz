@@ -8,7 +8,7 @@ import (
 
 	"fizzbuzz.com/v1/database"
 	"fizzbuzz.com/v1/json_struct"
-	"fizzbuzz.com/v1/middleware"
+	"fizzbuzz.com/v1/middlewares"
 	"fizzbuzz.com/v1/models"
 	"gorm.io/gorm"
 )
@@ -115,7 +115,7 @@ func Fizzbuzz(res http.ResponseWriter, req *http.Request) {
 
 	res.Header().Set("Content-Type", "application/json")
 
-	if _, authentified := middleware.Middleware_token(res, req); !authentified {
+	if _, authentified := middlewares.Middleware_token(res, req); !authentified {
 		return
 	}
 
