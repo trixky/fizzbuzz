@@ -1,0 +1,29 @@
+ideal:
+    - POSTGRES:
+        * add admin column to api_users table
+        * is sanitized ?
+        * check is not exposed
+        * resilience: what append if connection is lost ?
+    - SERVER:
+        * sanitize pseudo
+        * check pseudo/password
+        * sanitize/check str1 str2 in the fizzbuzz
+        * optimize fizzbuzz_stats
+        * mux ? improve middleware organization ?
+        * check password len
+        * check pseudo len
+        * admin request for block/unblock users
+        * admin can block admin security ?
+        * resilience: delete new user in postgres if error occured from redis ?
+    - PGADMIN:
+        * change default logs
+    - REDIS:
+        * too many tokens by user ?
+        * add admins ?
+        * sanitize ? (with pseudo keys for exemple)
+        * check is not exposed
+        * resilience: what append if connection is lost ?
+
+//////////// TIPS
+
+condition > ; < (context declaration)
