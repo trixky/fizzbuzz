@@ -4,13 +4,13 @@
 
 \c fizzbuzz;
 
-CREATE TABLE fizzbuzz_request_statistic (
+CREATE TABLE fizzbuzz_request_statistics (
     int1 INTEGER NOT NULL,
     int2 INTEGER NOT NULL,
     _limit INTEGER NOT NULL,
     str1 VARCHAR(51),
     str2 VARCHAR(51),
-    request_number INTEGER DEFAULT 0 NOT NULL
+    request_number INTEGER DEFAULT 1 NOT NULL
 );
 
 CREATE TABLE api_users (

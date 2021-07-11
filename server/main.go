@@ -64,6 +64,7 @@ func main() {
 	http.HandleFunc("/register", routes.Register)
 	http.HandleFunc("/login", routes.Login)
 	http.HandleFunc("/block", routes.Block)
+	http.HandleFunc("/stats", routes.Stats)
 
 	log.Fatalln("init http: ERROR > ", http.ListenAndServe(":8080", nil))
 }

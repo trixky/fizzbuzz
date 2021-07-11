@@ -20,6 +20,7 @@ func Block(res http.ResponseWriter, req *http.Request) {
 	}
 
 	res.Header().Set("Content-Type", "application/json")
+
 	pseudo, authentified := middleware.Middleware_token(res, req)
 	if !authentified {
 		return

@@ -39,8 +39,8 @@ func Login(res http.ResponseWriter, req *http.Request) {
 	hashed_password := password_hasheur.Sum(nil)
 	api_user := models.Api_users{}
 
-	if result := database.Postgres.Table("api_users").Where(map[string]interface{}{"pseudo": pseudo, "password": hex.EncodeToString(hashed_password)}).First(&api_user); result.Error != nil {
-		if errors.Is(result.Error, gorm.ErrRecordNotFound) {
+	if err := database.Postgres.Table("api_users").Where(map[string]interface{}{"pseudo": pseudo, "password": hex.EncodeToString(hashed_password)}).First(&api_user).Error; err != nil {
+		if errors.Is(err, gorm.ErrRecordNotFound) {
 			res.WriteHeader(http.StatusUnauthorized)
 			json.NewEncoder(res).Encode(json_struct.Data_error{Error: "bad pseudo or/and password"})
 		} else {

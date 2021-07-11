@@ -15,6 +15,7 @@ ideal:
         * admin request for block/unblock users
         * admin can block admin security ?
         * resilience: delete new user in postgres if error occured from redis ?
+        * unlock limit of fizzbuzz ( > 100), overflow ?
     - PGADMIN:
         * change default logs
     - REDIS:
@@ -23,6 +24,7 @@ ideal:
         * sanitize ? (with pseudo keys for exemple)
         * check is not exposed
         * resilience: what append if connection is lost ?
+        * add stat with refresher ?
 
 //////////// TIPS
 

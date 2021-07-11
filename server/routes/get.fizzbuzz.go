@@ -2,11 +2,15 @@ package routes
 
 import (
 	"encoding/json"
+	"errors"
 	"net/http"
 	"strconv"
 
+	"fizzbuzz.com/v1/database"
 	"fizzbuzz.com/v1/json_struct"
 	"fizzbuzz.com/v1/middleware"
+	"fizzbuzz.com/v1/models"
+	"gorm.io/gorm"
 )
 
 type Data_fizzbuzz struct {
@@ -110,8 +114,8 @@ func Fizzbuzz(res http.ResponseWriter, req *http.Request) {
 	}
 
 	res.Header().Set("Content-Type", "application/json")
-	_, authentified := middleware.Middleware_token(res, req)
-	if !authentified {
+
+	if _, authentified := middleware.Middleware_token(res, req); !authentified {
 		return
 	}
 
@@ -128,7 +132,35 @@ func Fizzbuzz(res http.ResponseWriter, req *http.Request) {
 	if len(errs) > 0 {
 		res.WriteHeader(http.StatusBadRequest)
 		json.NewEncoder(res).Encode(json_struct.Data_errors{Errors: errs})
+		return
 	} else {
-		json.NewEncoder(res).Encode(Data_fizzbuzz{fizzbuzz_generator(&fizzbuzz_values)})
+		current_fizzbuzz_request_statistic := models.Fizzbuzz_request_statistics{}
+
+		if err := database.Postgres.Table("fizzbuzz_request_statistics").Where(map[string]interface{}{"int1": fizzbuzz_values.int1, "int2": fizzbuzz_values.int2, "_limit": fizzbuzz_values.limit, "str1": fizzbuzz_values.str1, "str2": fizzbuzz_values.str2}).First(&current_fizzbuzz_request_statistic).Error; err != nil {
+			if errors.Is(err, gorm.ErrRecordNotFound) {
+				if err := database.Postgres.Create(&models.Fizzbuzz_request_statistics{Int1: fizzbuzz_values.int1, Int2: fizzbuzz_values.int2, Limit: fizzbuzz_values.limit, Str1: fizzbuzz_values.str1, Str2: fizzbuzz_values.str2}).Error; err != nil {
+					res.WriteHeader(http.StatusInternalServerError)
+					json.NewEncoder(res).Encode(json_struct.Data_error{Error: "internal server error"})
+					return
+				} else {
+					data_fizzbuzz := Data_fizzbuzz{fizzbuzz_generator(&fizzbuzz_values)}
+					json.NewEncoder(res).Encode(data_fizzbuzz)
+				}
+			} else {
+				res.WriteHeader(http.StatusInternalServerError)
+				json.NewEncoder(res).Encode(json_struct.Data_error{Error: "internal server error"})
+				return
+			}
+			return
+		} else {
+			if err := database.Postgres.Table("fizzbuzz_request_statistics").Where(map[string]interface{}{"int1": fizzbuzz_values.int1, "int2": fizzbuzz_values.int2, "_limit": fizzbuzz_values.limit, "str1": fizzbuzz_values.str1, "str2": fizzbuzz_values.str2}).UpdateColumn("request_number", current_fizzbuzz_request_statistic.Request_number+1).Error; err != nil {
+				res.WriteHeader(http.StatusInternalServerError)
+				json.NewEncoder(res).Encode(json_struct.Data_error{Error: "internal server error"})
+				return
+			} else {
+				data_fizzbuzz := Data_fizzbuzz{fizzbuzz_generator(&fizzbuzz_values)}
+				json.NewEncoder(res).Encode(data_fizzbuzz)
+			}
+		}
 	}
 }

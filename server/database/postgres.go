@@ -16,5 +16,9 @@ func Init_postgres(dsn string) (*gorm.DB, error) {
 		err = Postgres.AutoMigrate(&models.Api_users{})
 	}
 
+	if err == nil {
+		err = Postgres.AutoMigrate(&models.Fizzbuzz_request_statistics{})
+	}
+
 	return Postgres, err
 }
