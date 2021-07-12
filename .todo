@@ -1,28 +1,30 @@
 ideal:
+    - GLOBAL:
+        * mod dev/recette/prod ?
     - POSTGRES:
         * add admin column to api_users table
-        * is sanitized ?
-        * check is not exposed
+        * is sanitized ? [CRITICAL]
         * resilience: what append if connection is lost ?
     - SERVER:
         * sanitize pseudo
+        * accept json over form ?
         * check pseudo/password
         * sanitize/check str1 str2 in the fizzbuzz
         * optimize fizzbuzz_stats
         * mux ? improve middleware organization ?
         * check password len
         * check pseudo len
-        * admin request for block/unblock users
-        * admin can block admin security ?
+        * admin can block admin ?
         * resilience: delete new user in postgres if error occured from redis ?
         * unlock limit of fizzbuzz ( > 100), overflow ?
+        * optimize double request like get/update
+        * use env for init.sql ?
     - PGADMIN:
         * change default logs
     - REDIS:
         * too many tokens by user ?
         * add admins ?
-        * sanitize ? (with pseudo keys for exemple)
-        * check is not exposed
+        * sanitize ? (with pseudo keys for exemple) [CRITICAL]
         * resilience: what append if connection is lost ?
         * add stat with refresher ?
 

@@ -4,10 +4,10 @@ import "gorm.io/gorm"
 
 type Fizzbuzz_request_statistics struct {
 	gorm.Model
-	Int1           int
-	Int2           int
-	Limit          int `gorm:"column:_limit"`
-	Str1           string
-	Str2           string
-	Request_number int `gorm:"default:1"`
+	Int1           int    `gorm:"not null"`
+	Int2           int    `gorm:"not null"`
+	Limit          int    `gorm:"not null;column:_limit"`
+	Str1           string `gorm:"not null"`
+	Str2           string `gorm:"not null"`
+	Request_number int    `gorm:"not null;default:1"`
 }
