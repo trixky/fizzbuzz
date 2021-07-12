@@ -1,3 +1,4 @@
+// Env contains all the necessary environment variables.
 package main
 
 import (
@@ -14,8 +15,7 @@ import (
 	"fizzbuzz.com/v1/routes"
 )
 
-var Local_env = Env{}
-
+// Env contains all the necessary environment variables.
 type Env struct {
 	postgres_user     string
 	postgres_password string
@@ -25,28 +25,30 @@ type Env struct {
 func init() {
 	fmt.Println("\n\n\n=================== < INIT  SERVER > ===================")
 
-	// ----------------------------------------------- INIT ENV
-	Local_env.postgres_user = os.Getenv("POSTGRES_USER")
-	if len(Local_env.postgres_user) < 1 {
+	env := Env{}
+
+	// initialize/read environment variables
+	env.postgres_user = os.Getenv("POSTGRES_USER")
+	if len(env.postgres_user) < 1 {
 		log.Fatalln("init env: ERROR > ", "POSTGRES_USER environment variable is not set")
 	}
-	Local_env.postgres_password = os.Getenv("POSTGRES_PASSWORD")
-	if len(Local_env.postgres_password) < 1 {
+	env.postgres_password = os.Getenv("POSTGRES_PASSWORD")
+	if len(env.postgres_password) < 1 {
 		log.Fatalln("init env: ERROR > ", "POSTGRES_PASSWORD environment variable is not set")
 	}
-	Local_env.postgres_db = os.Getenv("POSTGRES_DB")
-	if len(Local_env.postgres_db) < 1 {
+	env.postgres_db = os.Getenv("POSTGRES_DB")
+	if len(env.postgres_db) < 1 {
 		log.Fatalln("init env: ERROR > ", "POSTGRES_DB environment variable is not set")
 	}
 
-	// ----------------------------------------------- INIT POSTGRES
-	if postgres, err := database.Init_postgres("host=postgres user=trixky password=1234 dbname=fizzbuzz port=5432 sslmode=disable"); err != nil {
+	// initialize postgres
+	if postgres, err := database.Init_postgres("host=postgres user=" + env.postgres_user + " password=" + env.postgres_password + " dbname=" + env.postgres_db + " port=5432 sslmode=disable"); err != nil {
 		log.Fatalln("init postgres: ERROR > ", err)
 	} else {
 		fmt.Println("init postgres: SUCCESS > ", postgres)
 	}
 
-	// ----------------------------------------------- INIT REDIS
+	// initialize redis
 	if redis, err := database.Init_redis("redis:6379", "", 0); err != nil {
 		log.Fatalln("init redis: ERROR > ", err)
 	} else {
@@ -57,14 +59,16 @@ func init() {
 func main() {
 	fmt.Println("\n=================== < START SERVER > ===================")
 
-	// ----------------------------------------------- START API
+	// generates the router
 	mux := httprouter.New()
 
+	// defines the endpoints
 	mux.GET("/fizzbuzz", middlewares.Middleware_token(routes.Fizzbuzz))
 	mux.GET("/stats", middlewares.Middleware_token(routes.Stats))
 	mux.PATCH("/block", middlewares.Middleware_token(routes.Block))
 	mux.POST("/register", routes.Register)
 	mux.POST("/login", routes.Login)
 
+	// up the server
 	log.Fatalln("init http: ERROR > ", http.ListenAndServe(":8080", mux))
 }

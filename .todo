@@ -5,17 +5,20 @@ ideal:
         * is sanitized ? [CRITICAL]
         * use builtin password cryptography ?
         * resilience: what append if connection is lost ?
+        * dont update blocked column in api_users if is not necessary
     - SERVER:
         * sanitize pseudo [CRITICAL]
-        * accept json over form ?
         * validator pseudo/password [CRITICAL]
         * sanitize/check str1 str2 in the fizzbuzz [CRITICAL]
-        * mux ? improve middleware organization ?
         * admin can block admin ?
         * resilience: delete new user in postgres if error occured from redis ?
         * unlock limit of fizzbuzz ( > 100), overflow ?
         * optimize double request like get/update
         * use env for init.sql ?
+        * fizzbuzz route can be improved (is fat..)
+        * add options to the fizzbuzz request:
+            . choose the the number of request
+            . select specific int1/in2/limit/str1/str2
     - PGADMIN:
         * change default logs ?
     - REDIS:

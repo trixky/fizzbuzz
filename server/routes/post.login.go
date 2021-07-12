@@ -1,8 +1,6 @@
 package routes
 
 import (
-	"crypto/md5"
-	"encoding/hex"
 	"encoding/json"
 	"errors"
 	"net/http"
@@ -10,12 +8,14 @@ import (
 	"fizzbuzz.com/v1/database"
 	"fizzbuzz.com/v1/json_struct"
 	"fizzbuzz.com/v1/models"
+	"fizzbuzz.com/v1/tools"
 	"github.com/julienschmidt/httprouter"
 	uuid "github.com/satori/go.uuid"
 
 	"gorm.io/gorm"
 )
 
+// Login handles the [POST /login] request.
 func Login(res http.ResponseWriter, req *http.Request, ps httprouter.Params) {
 	res.Header().Set("Content-Type", "application/json")
 
@@ -29,17 +29,18 @@ func Login(res http.ResponseWriter, req *http.Request, ps httprouter.Params) {
 		return
 	}
 
-	// hash the password
-	password_hasheur := md5.New()
-	password_hasheur.Write([]byte(password))
-	hashed_password := password_hasheur.Sum(nil)
+	hashed_password_str := tools.Hash_password(password) // hash the password
+
 	api_user := models.Api_users{}
 
-	if err := database.Postgres.Table("api_users").Where(map[string]interface{}{"pseudo": pseudo, "password": hex.EncodeToString(hashed_password)}).First(&api_user).Error; err != nil {
+	if err := database.Postgres.Table("api_users").Where(map[string]interface{}{"pseudo": pseudo, "password": hashed_password_str}).First(&api_user).Error; err != nil {
+		// If postgres could not find the user.
 		if errors.Is(err, gorm.ErrRecordNotFound) {
+			// If postgres could not find the user with this pseudo or/and password.
 			res.WriteHeader(http.StatusUnauthorized)
 			json.NewEncoder(res).Encode(json_struct.Data_error{Error: "bad pseudo or/and password"})
 		} else {
+			// If postgres failed.
 			res.WriteHeader(http.StatusInternalServerError)
 			json.NewEncoder(res).Encode(json_struct.Data_error{Error: "internal server error"})
 		}
@@ -47,6 +48,7 @@ func Login(res http.ResponseWriter, req *http.Request, ps httprouter.Params) {
 	}
 
 	if api_user.Blocked {
+		// If user is blocked.
 		http.SetCookie(res, &http.Cookie{
 			Name:   "session",
 			MaxAge: -1,
@@ -56,19 +58,22 @@ func Login(res http.ResponseWriter, req *http.Request, ps httprouter.Params) {
 		return
 	}
 
-	new_session_token := uuid.NewV4().String()
+	new_session_token := uuid.NewV4().String() // generates a new session token (uuid)
 	if database.Redis.Append("tokens>"+pseudo, "|"+new_session_token).Err() != nil {
+		// If redis failed to add the token key to token keys.
 		res.WriteHeader(http.StatusInternalServerError)
 		json.NewEncoder(res).Encode(json_struct.Data_error{Error: "internal server error"})
 		return
 	}
 	if database.Redis.Set("token>"+new_session_token, pseudo, 0).Err() != nil {
+		// If redis failed to add the token key.
 		res.WriteHeader(http.StatusInternalServerError)
 		json.NewEncoder(res).Encode(json_struct.Data_error{Error: "internal server error"})
 		return
 	}
+
 	http.SetCookie(res, &http.Cookie{
 		Name:  "session",
 		Value: new_session_token,
-	})
+	}) // saves the token at the client
 }
