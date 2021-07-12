@@ -2,7 +2,7 @@
 
 <!-- --------------------------------- REGISTER -->
 
-The API works through a basic user system.
+The API works through a basic user system with session tokens (uuid).
 Users have the following attributes:
 
 - pseudo (string)
@@ -16,7 +16,7 @@ Users have the following attributes:
 
 # endpoints
 
-## register
+## /register
 
 To access the different API services (mainly the generation of a fizzbuzz) you must be registered with a valid account.
 
@@ -45,7 +45,7 @@ To access the different API services (mainly the generation of a fizzbuzz) you m
 
 <!-- --------------------------------- LOGIN -->
 
-## login
+## /login
 
 Once registered, you must authenticate yourself in order to obtain a session token which will take the form of a cookie.
 
@@ -62,6 +62,8 @@ Once registered, you must authenticate yourself in order to obtain a session tok
 
 - content-type: application/json
 
+> In case of success, the session token is saved in the "session" cookie.
+
 ### errors
 
 ```json
@@ -70,7 +72,7 @@ Once registered, you must authenticate yourself in order to obtain a session tok
 }
 ```
 
-## fizzbuzz
+## /fizzbuzz
 
 The heart of this API, it's up to you to build your personalized fizzbuzz!
 
@@ -86,7 +88,7 @@ The heart of this API, it's up to you to build your personalized fizzbuzz!
   - str1 (string)
   - str2 (string)
 
-> To access this service, you must have a valid session token from the 'session' cookie.
+> To access this service, you must have a valid session token from the "session" cookie.
 
 ### response
 
@@ -108,7 +110,7 @@ or
 }
 ```
 
-## stats
+## /stats
 
 Are you curious about the most popular fizzbuzzes right now?
 
@@ -117,7 +119,7 @@ Are you curious about the most popular fizzbuzzes right now?
 - method: GET
 - url: /stats
 
-> To access this service, you must have a valid session token from the 'session' cookie.
+> To access this service, you must have a valid session token from the "session" cookie.
 
 ### response
 
@@ -163,7 +165,7 @@ Are you curious about the most popular fizzbuzzes right now?
 }
 ```
 
-## block
+## /block
 
 As said in the introduction, administrators can block or unblock accounts.
 
@@ -176,7 +178,7 @@ As said in the introduction, administrators can block or unblock accounts.
   - pseudo (string)
   - block_status (boolean > "true" / "false")
 
-> To access this service, you must have a valid session token from the 'session' cookie with administrator privileges.
+> To access this service, you must have a valid session token from the "session" cookie with administrator privileges.
 
 ### response
 
