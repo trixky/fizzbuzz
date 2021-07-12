@@ -37,7 +37,7 @@ To access the different API services (mainly the generation of a fizzbuzz) you m
 
 ### errors
 
-```json
+```JSON5
 {
   "error": "reason..."
 }
@@ -66,7 +66,7 @@ Once registered, you must authenticate yourself in order to obtain a session tok
 
 ### errors
 
-```json
+```JSON5
 {
   "error": "reason..."
 }
@@ -96,7 +96,7 @@ The heart of this API, it's up to you to build your personalized fizzbuzz!
 
 ### errors
 
-```json
+```JSON5
 {
   "error": "reason..."
 }
@@ -104,7 +104,7 @@ The heart of this API, it's up to you to build your personalized fizzbuzz!
 
 or
 
-```json
+```JSON5
 {
   "errors": ["first reason...", "another reason..."]
 }
@@ -125,7 +125,7 @@ Are you curious about the most popular fizzbuzzes right now?
 
 - content-type: application/json
 
-```json
+```JSON5
 {
     "requests": [
         {
@@ -159,7 +159,7 @@ Are you curious about the most popular fizzbuzzes right now?
 
 ### errors
 
-```json
+```JSON5
 {
   "error": "reason..."
 }
@@ -186,7 +186,7 @@ As said in the introduction, administrators can block or unblock accounts.
 
 ### errors
 
-```json
+```JSON5
 {
   "error": "reason..."
 }
