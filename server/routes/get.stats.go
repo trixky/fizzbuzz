@@ -22,7 +22,7 @@ type Data_stat struct {
 
 // Data_stats contains the list of the most popular fizzbuzz requests.
 type Data_stats struct {
-	Requests []Data_stat `json:"request"`
+	Requests []Data_stat `json:"requests"`
 }
 
 // Stats handles the [GET /stats] request.

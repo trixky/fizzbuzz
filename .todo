@@ -19,6 +19,7 @@ ideal:
         * add options to the fizzbuzz request:
             . choose the the number of request
             . select specific int1/in2/limit/str1/str2
+        * add a disconnection endpoint
     - PGADMIN:
         * change default logs ?
     - REDIS:

@@ -37,6 +37,10 @@ func Login(res http.ResponseWriter, req *http.Request, ps httprouter.Params) {
 		// If postgres could not find the user.
 		if errors.Is(err, gorm.ErrRecordNotFound) {
 			// If postgres could not find the user with this pseudo or/and password.
+			http.SetCookie(res, &http.Cookie{
+				Name:   "session",
+				MaxAge: -1,
+			}) // remove the potential old token from the client
 			res.WriteHeader(http.StatusUnauthorized)
 			json.NewEncoder(res).Encode(json_struct.Data_error{Error: "bad pseudo or/and password"})
 		} else {
@@ -52,7 +56,7 @@ func Login(res http.ResponseWriter, req *http.Request, ps httprouter.Params) {
 		http.SetCookie(res, &http.Cookie{
 			Name:   "session",
 			MaxAge: -1,
-		})
+		}) // remove the potential old token from the client
 		res.WriteHeader(http.StatusUnauthorized)
 		json.NewEncoder(res).Encode(json_struct.Data_error{Error: "your account is blocked"})
 		return
