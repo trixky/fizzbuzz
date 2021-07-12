@@ -94,6 +94,29 @@ The heart of this API, it's up to you to build your personalized fizzbuzz!
 
 - content-type: application/json
 
+```JSON5
+{
+    "fizzbuzz": [
+        "1",
+        "2",
+        "fizz",
+        "4",
+        "buzz",
+        "fizz",
+        "7",
+        "8",
+        "fizz",
+        "buzz",
+        "11",
+        "fizz",
+        "13",
+        "14",
+        "fizzbuzz"
+        // ...
+    ]
+}
+```
+
 ### errors
 
 ```JSON5
@@ -106,7 +129,11 @@ or
 
 ```JSON5
 {
-  "errors": ["first reason...", "another reason..."]
+  "errors": [
+      "first reason...",
+      "another reason..."
+      // ...
+    ]
 }
 ```
 
