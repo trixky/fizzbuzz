@@ -28,8 +28,8 @@ To access the different API services (mainly the generation of a fizzbuzz) you m
 - url: /register
 - content-type: application/x-www-form-urlencoded
 - input keys:
-  - pseudo (string)
-  - password (string)
+  - pseudo * (string)
+  - password * (string)
 
 ### response
 
@@ -55,8 +55,8 @@ Once registered, you must authenticate yourself in order to obtain a session tok
 - url: /login
 - content-type: application/x-www-form-urlencoded
 - input keys:
-  - pseudo (string)
-  - password (string)
+  - pseudo * (string)
+  - password * (string)
 
 ### response
 
@@ -82,11 +82,11 @@ The heart of this API, it's up to you to build your personalized fizzbuzz!
 - url: /fizzbuzz
 - content-type: application/x-www-form-urlencoded
 - input keys:
-  - int1 (integer)
-  - int2 (integer)
-  - limit (integer)
-  - str1 (string)
-  - str2 (string)
+  - int1 * (integer)
+  - int2 * (integer)
+  - limit * (integer)
+  - str1 * (string > max-length: 30)
+  - str2 * (string > max-length: 30)
 
 > To access this service, you must have a valid session token from the "session" cookie.
 
@@ -202,8 +202,8 @@ As said in the introduction, administrators can block or unblock accounts.
 - url: /block
 - content-type: application/x-www-form-urlencoded
 - input keys:
-  - pseudo (string)
-  - block_status (boolean > "true" / "false")
+  - pseudo * (string)
+  - block_status * (boolean > ["true","false"])
 
 > To access this service, you must have a valid session token from the "session" cookie with administrator privileges.
 
