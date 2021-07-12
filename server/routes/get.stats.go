@@ -6,8 +6,8 @@ import (
 
 	"fizzbuzz.com/v1/database"
 	"fizzbuzz.com/v1/json_struct"
-	"fizzbuzz.com/v1/middlewares"
 	"fizzbuzz.com/v1/models"
+	"github.com/julienschmidt/httprouter"
 )
 
 type Data_stat struct {
@@ -23,17 +23,8 @@ type Data_stats struct {
 	Requests []Data_stat `json:"request"`
 }
 
-func Stats(res http.ResponseWriter, req *http.Request) {
-	if req.URL.Path != "/stats" || req.Method != "GET" {
-		http.Error(res, "404 not found", http.StatusNotFound)
-		return
-	}
-
+func Stats(res http.ResponseWriter, req *http.Request, ps httprouter.Params) {
 	res.Header().Set("Content-Type", "application/json")
-
-	if _, authentified := middlewares.Middleware_token(res, req); !authentified {
-		return
-	}
 
 	reqsss := []models.Fizzbuzz_request_statistics{}
 

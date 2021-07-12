@@ -10,21 +10,15 @@ import (
 	"fizzbuzz.com/v1/json_struct"
 	"fizzbuzz.com/v1/middlewares"
 	"fizzbuzz.com/v1/models"
+	"github.com/julienschmidt/httprouter"
 	"gorm.io/gorm"
 )
 
-func Block(res http.ResponseWriter, req *http.Request) {
-	if req.URL.Path != "/block" || req.Method != "PATCH" {
-		http.Error(res, "404 not found", http.StatusNotFound)
-		return
-	}
-
+func Block(res http.ResponseWriter, req *http.Request, ps httprouter.Params) {
 	res.Header().Set("Content-Type", "application/json")
 
-	pseudo, authentified := middlewares.Middleware_token(res, req)
-	if !authentified {
-		return
-	}
+	// ignore err
+	pseudo, _ := req.Context().Value(middlewares.Key_middleware_infos).(*middlewares.Middleware_infos).Get_pseudo("pseudo")
 
 	subject_pseudo := req.FormValue("pseudo")
 	block_status := req.FormValue("block_status")

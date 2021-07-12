@@ -10,17 +10,13 @@ import (
 	"fizzbuzz.com/v1/database"
 	"fizzbuzz.com/v1/json_struct"
 	"fizzbuzz.com/v1/models"
+	"github.com/julienschmidt/httprouter"
 	uuid "github.com/satori/go.uuid"
 
 	"gorm.io/gorm"
 )
 
-func Login(res http.ResponseWriter, req *http.Request) {
-	if req.URL.Path != "/login" || req.Method != "POST" {
-		http.Error(res, "404 not found", http.StatusNotFound)
-		return
-	}
-
+func Login(res http.ResponseWriter, req *http.Request, ps httprouter.Params) {
 	res.Header().Set("Content-Type", "application/json")
 
 	pseudo := req.FormValue("pseudo")

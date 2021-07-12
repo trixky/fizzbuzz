@@ -8,8 +8,8 @@ import (
 
 	"fizzbuzz.com/v1/database"
 	"fizzbuzz.com/v1/json_struct"
-	"fizzbuzz.com/v1/middlewares"
 	"fizzbuzz.com/v1/models"
+	"github.com/julienschmidt/httprouter"
 	"gorm.io/gorm"
 )
 
@@ -107,17 +107,8 @@ func fizzbuzz_generator(fizzbuzz_values *Fizzbuzz_values) []string {
 	return fizzbuzz_array
 }
 
-func Fizzbuzz(res http.ResponseWriter, req *http.Request) {
-	if req.URL.Path != "/fizzbuzz" || req.Method != "GET" {
-		http.Error(res, "404 not found", http.StatusNotFound)
-		return
-	}
-
+func Fizzbuzz(res http.ResponseWriter, req *http.Request, ps httprouter.Params) {
 	res.Header().Set("Content-Type", "application/json")
-
-	if _, authentified := middlewares.Middleware_token(res, req); !authentified {
-		return
-	}
 
 	fizzbuzz_values := Fizzbuzz_values{}
 	fizzbuzz_errors := Fizzbuzz_errors{}

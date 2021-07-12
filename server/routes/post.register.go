@@ -10,14 +10,10 @@ import (
 	"fizzbuzz.com/v1/database"
 	"fizzbuzz.com/v1/json_struct"
 	"fizzbuzz.com/v1/models"
+	"github.com/julienschmidt/httprouter"
 )
 
-func Register(res http.ResponseWriter, req *http.Request) {
-	if req.URL.Path != "/register" || req.Method != "POST" {
-		http.Error(res, "404 not found", http.StatusNotFound)
-		return
-	}
-
+func Register(res http.ResponseWriter, req *http.Request, ps httprouter.Params) {
 	res.Header().Set("Content-Type", "application/json")
 
 	pseudo := req.FormValue("pseudo")
