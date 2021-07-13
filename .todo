@@ -7,12 +7,12 @@ ideal:
         * resilience: what append if connection is lost ?
         * dont update blocked column in api_users if is not necessary
     - SERVER:
-        * sanitize pseudo [CRITICAL]
+        * sanitize pseudo in [CRITICAL]
         * validator pseudo/password [CRITICAL]
         * sanitize/check str1 str2 in the fizzbuzz [CRITICAL]
         * admin can block admin ?
         * resilience: delete new user in postgres if error occured from redis ?
-        * unlock limit of fizzbuzz ( > 100), overflow ?
+        * unlock limit of fizzbuzz ( > 100), check overflow
         * optimize double request like get/update
         * use env for init.sql ?
         * fizzbuzz route can be improved (is fat..)
