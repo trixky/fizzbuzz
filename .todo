@@ -30,7 +30,7 @@ ideal:
         * add stats with refresher
         * add expire on token (redis and cookies...)
     - TEST:
-        * improve initialization (async)
+        * structure in several files
 
 //////////// TIPS
 

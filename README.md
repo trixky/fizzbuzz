@@ -11,7 +11,7 @@ docker-compose up -d
 
 ## Api
 
-The API is accessible in localhost on port 8080.
+The API is accessible on [localhost:8080/](http://localhost:8080/).
 You will find the [postam](https://www.postman.com/) collection from the `fizzbuzz.postman_collection.json` file.
 You will also find the API documentation [here](https://github.com/trixky/fizzbuzz/blob/main/server/README.md).
 
@@ -22,9 +22,14 @@ docker-compose exec postgres psql # to access the postgres cli (psql)
 docker-compose exec redis sh -c 'redis-cli -h redis' # to access the redis cli
 ```
 
+Pgadmin is accessible on [localhost:5050/](http://localhost:8080/).
+
+![screenshot](https://raw.githubusercontent.com/trixky/fizzbuzz/main/demo/pgadmin_login.png)
+![screenshot](https://raw.githubusercontent.com/trixky/fizzbuzz/main/demo/pgadmin_connection.png)
+
 ## Test
 
-![screenshot](https://raw.githubusercontent.com/trixky/volte_face/master/demo/screenshot.png)
+![screenshot](https://raw.githubusercontent.com/trixky/fizzbuzz/main/demo/test.png)
 
 ```bash
 docker-compose run test
