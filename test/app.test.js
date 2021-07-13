@@ -93,7 +93,7 @@ describe("API test", function () {
   };
 
   // ===================================== REGISTER
-  describe("register", function () {
+  describe("/register", function () {
     it("register @chat:1234", (done) => {
       request
         .post("/register")
@@ -144,7 +144,7 @@ describe("API test", function () {
     });
   });
   // ===================================== LOGIN
-  describe("login", function () {
+  describe("/login", function () {
     it("login @?:? #must_fail", (done) => {
       request
         .post("/login")
@@ -263,7 +263,7 @@ describe("API test", function () {
     });
   });
   // ===================================== FIZZBUZZ
-  describe("fizzbuzz", function () {
+  describe("/fizzbuzz", function () {
     it("fizzbuzz @? #must_fail", (done) => {
         request
           .get("/fizzbuzz")
@@ -349,7 +349,7 @@ describe("API test", function () {
     });
   });
   // ===================================== STATS
-  describe("stats", function () {
+  describe("/stats", function () {
     it("stats @? #must_fail", (done) => {
       request
         .get("/stats")
@@ -410,7 +410,7 @@ describe("API test", function () {
     });
   });
   // ===================================== BLOCK
-  describe("block", function () {
+  describe("/block", function () {
     it("block @? > @chien [true] #must_fail", (done) => {
       request
         .patch("/block")

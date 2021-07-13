@@ -31,6 +31,8 @@ ideal:
         * add expire on token (redis and cookies...)
     - TEST:
         * structure in several files
+        * more test on potential crash/session error
+        * more test on fizzbuzz result
 
 //////////// TIPS
 

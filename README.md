@@ -1,6 +1,6 @@
 # fizzbuzz
 
-A small [fizzbuzz](https://en.wikipedia.org/wiki/Fizz_buzz) API implementation using [go](https://golang.org/), [postgresql](https://www.postgresql.org/), [redis](https://redis.io/), [pgadmin](https://www.pgadmin.org/), and [jest](https://jestjs.io/)/[supertest](https://www.npmjs.com/package/supertest) tester. **(docker-compose)**
+A small [fizzbuzz](https://en.wikipedia.org/wiki/Fizz_buzz) API implementation using [go](https://golang.org/), [postgresql](https://www.postgresql.org/), [redis](https://redis.io/), [pgadmin](https://www.pgadmin.org/) and a [jest](https://jestjs.io/)/[supertest](https://www.npmjs.com/package/supertest) tester. **(docker-compose)**
 
 ## Usage
 
@@ -13,7 +13,7 @@ docker-compose up -d
 
 The API is accessible on [localhost:8080](http://localhost:8080/).
 
-You will find the [postam](https://www.postman.com/) collection from the `fizzbuzz.postman_collection.json` file.
+You will find the [postam](https://www.postman.com/) collection from the `fizzbuzz.postman_collection.json` exported file.
 
 You will also find the API documentation [here](https://github.com/trixky/fizzbuzz/blob/main/server/README.md).
 
@@ -31,17 +31,12 @@ Pgadmin is accessible on [localhost:5050](http://localhost:5050/).
 
 ## Test
 
+The API synchronous tester is built with [jest](https://jestjs.io/)/[supertest](https://www.npmjs.com/package/supertest) on [node.js](https://nodejs.org/)
+
 ```bash
 docker-compose run test
 ```
 
-![screenshot](https://raw.githubusercontent.com/trixky/fizzbuzz/main/demo/test.png)
-
 > The test erase all data on postgresql and redis!
 
-## Stack
-
-- Go
-- Node.js / Jest / Supertest
-- Postgresql
-- Redis
+![screenshot](https://raw.githubusercontent.com/trixky/fizzbuzz/main/demo/test.png)
