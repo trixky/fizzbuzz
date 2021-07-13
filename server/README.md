@@ -14,13 +14,15 @@ Users have the following attributes:
 
 > Privileges (admin) cannot be changed from the API.
 
+> An administrator \[admin:1234\] is initialized by default.
+
 # endpoints
 
-## register
+## Register
 
 To access the different API services (mainly the generation of a fizzbuzz) you must be registered with a valid account.
 
-### request
+### Request
 
 - method: POST
 - url: /register
@@ -29,13 +31,13 @@ To access the different API services (mainly the generation of a fizzbuzz) you m
   - _pseudo_ \* (string)
   - _password_ \* (string)
 
-### response
+### Response
 
 - content-type: application/json
 
 > Even if the registration is a success, no session token is returned to this step.
 
-### errors
+### Errors
 
 ```JSON5
 {
@@ -45,11 +47,11 @@ To access the different API services (mainly the generation of a fizzbuzz) you m
 
 <!-- --------------------------------- LOGIN -->
 
-## login
+## Login
 
 Once registered, you must authenticate yourself in order to obtain a session token which will take the form of a cookie.
 
-### request
+### Request
 
 - method: POST
 - url: /login
@@ -58,13 +60,13 @@ Once registered, you must authenticate yourself in order to obtain a session tok
   - _pseudo_ \* (string)
   - _password_ \* (string)
 
-### response
+### Response
 
 - content-type: application/json
 
 > In case of success, the session token is saved in the "session" cookie.
 
-### errors
+### Errors
 
 ```JSON5
 {
@@ -72,11 +74,11 @@ Once registered, you must authenticate yourself in order to obtain a session tok
 }
 ```
 
-## fizzbuzz
+## Fizzbuzz
 
 The heart of this API, it's up to you to build your personalized fizzbuzz!
 
-### request
+### Request
 
 - method: GET
 - url: /fizzbuzz
@@ -90,7 +92,7 @@ The heart of this API, it's up to you to build your personalized fizzbuzz!
 
 > To access this service, you must have a valid session token from the "session" cookie.
 
-### response
+### Response
 
 - content-type: application/json
 
@@ -117,7 +119,7 @@ The heart of this API, it's up to you to build your personalized fizzbuzz!
 }
 ```
 
-### errors
+### Errors
 
 ```JSON5
 {
@@ -137,18 +139,18 @@ or
 }
 ```
 
-## stats
+## Stats
 
 Are you curious about the most popular fizzbuzzes right now?
 
-### request
+### Request
 
 - method: GET
 - url: /stats
 
 > To access this service, you must have a valid session token from the "session" cookie.
 
-### response
+### Response
 
 - content-type: application/json
 
@@ -184,7 +186,7 @@ Are you curious about the most popular fizzbuzzes right now?
 }
 ```
 
-### errors
+### Errors
 
 ```JSON5
 {
@@ -192,11 +194,11 @@ Are you curious about the most popular fizzbuzzes right now?
 }
 ```
 
-## block
+## Block
 
 As said in the introduction, administrators can block or unblock accounts.
 
-### request
+### Request
 
 - method: PATCH
 - url: /block
@@ -207,11 +209,11 @@ As said in the introduction, administrators can block or unblock accounts.
 
 > To access this service, you must have a valid session token from the "session" cookie with administrator privileges.
 
-### response
+### Response
 
 - content-type: application/json
 
-### errors
+### Errors
 
 ```JSON5
 {
