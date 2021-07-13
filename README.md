@@ -31,10 +31,10 @@ Pgadmin is accessible on [localhost:5050](http://localhost:5050/).
 
 ## Test
 
-The API synchronous tester is built with [jest](https://jestjs.io/)/[supertest](https://www.npmjs.com/package/supertest) on [node.js](https://nodejs.org/)
+The API synchronous tester is built with [jest](https://jestjs.io/)/[supertest](https://www.npmjs.com/package/supertest) on [node.js](https://nodejs.org/).
 
 ```bash
-docker-compose run test
+docker-compose run --rm test
 ```
 
 > The test erase all data on postgresql and redis!

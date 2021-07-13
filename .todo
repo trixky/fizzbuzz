@@ -33,6 +33,7 @@ ideal:
         * structure in several files
         * more test on potential crash/session error
         * more test on fizzbuzz result
+        * check response content-type ?
 
 //////////// TIPS
 
