@@ -28,6 +28,9 @@ ideal:
         * sanitize ? (with pseudo keys for exemple) [CRITICAL]
         * resilience: what append if connection is lost ?
         * add stats with refresher
+        * add expire on token (redis and cookies...)
+    - TEST:
+        * improve initialization (async)
 
 //////////// TIPS
 

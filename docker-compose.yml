@@ -2,10 +2,12 @@ version: "3.8"
 services:
   server:
     build: ./server
-    environment: 
+    environment:
       POSTGRES_USER: ${POSTGRES_USER}
+      POSTGRES_HOST: ${POSTGRES_HOST}
       POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
       POSTGRES_DB: ${POSTGRES_DB}
+      POSTGRES_PORT: ${POSTGRES_PORT}
     volumes:
       - ./server:/go/src/go-with-compose
     working_dir: /go/src/go-with-compose
@@ -19,18 +21,41 @@ services:
     ports:
       - "8080:8080"
 
+  test:
+    build: ./test
+    environment:
+      PGUSER: ${PGUSER}
+      PGHOST: ${PGHOST}
+      PGPASSWORD: ${PGPASSWORD}
+      PGDATABASE: ${PGDATABASE}
+      PGPORT: ${PGPORT}
+    volumes:
+      - ./test/app.test.js:/home/node/test/app.test.js
+      - ./test/package.json:/home/node/test/package.json
+      - ./test/jest.config.js:/home/node/test/jest.config.js
+    working_dir: /home/node/test
+    command: npx jest --runInBand
+    depends_on:
+      - postgres
+      - redis
+      - server
+    links:
+      - postgres
+      - redis
+      - server
+
   redis:
     image: redis:alpine
     volumes:
       - redis-data:/data
 
     # access to the redis CLI:
-    # $> dc exec redis sh -c 'redis-cli -h redis'
+    # $> docker-compose exec redis sh -c 'redis-cli -h redis'
 
   postgres:
     image: postgres
     restart: always
-    environment: 
+    environment:
       POSTGRES_USER: ${POSTGRES_USER}
       POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
       POSTGRES_DB: ${POSTGRES_DB}

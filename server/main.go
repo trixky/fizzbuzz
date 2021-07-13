@@ -18,8 +18,10 @@ import (
 // Env contains all the necessary environment variables.
 type Env struct {
 	postgres_user     string
+	postgres_host     string
 	postgres_password string
 	postgres_db       string
+	postgres_port     string
 }
 
 func init() {
@@ -32,6 +34,10 @@ func init() {
 	if len(env.postgres_user) < 1 {
 		log.Fatalln("init env: ERROR > ", "POSTGRES_USER environment variable is not set")
 	}
+	env.postgres_host = os.Getenv("POSTGRES_HOST")
+	if len(env.postgres_host) < 1 {
+		log.Fatalln("init env: ERROR > ", "POSTGRES_HOST environment variable is not set")
+	}
 	env.postgres_password = os.Getenv("POSTGRES_PASSWORD")
 	if len(env.postgres_password) < 1 {
 		log.Fatalln("init env: ERROR > ", "POSTGRES_PASSWORD environment variable is not set")
@@ -40,9 +46,13 @@ func init() {
 	if len(env.postgres_db) < 1 {
 		log.Fatalln("init env: ERROR > ", "POSTGRES_DB environment variable is not set")
 	}
+	env.postgres_port = os.Getenv("POSTGRES_PORT")
+	if len(env.postgres_port) < 1 {
+		log.Fatalln("init env: ERROR > ", "POSTGRES_PORT environment variable is not set")
+	}
 
 	// initialize postgres
-	if postgres, err := database.Init_postgres("host=postgres user=" + env.postgres_user + " password=" + env.postgres_password + " dbname=" + env.postgres_db + " port=5432 sslmode=disable"); err != nil {
+	if postgres, err := database.Init_postgres("host=" + env.postgres_host + " user=" + env.postgres_user + " password=" + env.postgres_password + " dbname=" + env.postgres_db + " port=" + env.postgres_port + " sslmode=disable"); err != nil {
 		log.Fatalln("init postgres: ERROR > ", err)
 	} else {
 		fmt.Println("init postgres: SUCCESS > ", postgres)

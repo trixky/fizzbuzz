@@ -27,7 +27,7 @@ func Init_postgres(dsn string) (*gorm.DB, error) {
 	return Postgres, err
 }
 
-// Init_postgres initializes redis.
+// Init_redis initializes redis.
 func Init_redis(addr string, password string, db int) (*redis.Client, error) {
 	Redis = redis.NewClient(&redis.Options{
 		Addr:     addr,
