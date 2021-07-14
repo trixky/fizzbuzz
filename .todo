@@ -8,16 +8,14 @@ ideal:
         * dont update blocked column in api_users if is not necessary
         * optimize double request like get/update
     - SERVER:
-        * sanitize pseudo in [CRITICAL]
-        * validator pseudo/password [CRITICAL]
+        * sanitize/check pseudo in [CRITICAL]
         * sanitize/check str1 str2 in the fizzbuzz [CRITICAL]
         * resilience: delete new user in postgres if error occured from redis after creation ?
         * limit the fizzbuzz ?
         * use env for init.sql ?
-        * fizzbuzz route can be improved (is fat..)
-        * add a disconnection endpoint
+        * add a disconnection endpoint (for delete redis keys)
     - PGADMIN:
-        * change default logs ?
+        ...
     - REDIS:
         * add admins ?
         * add stats ?
@@ -30,7 +28,5 @@ ideal:
         * more test on potential crash/session error
         * more test on fizzbuzz result
         * check response content-type ?
-
-//////////// TIPS
-
-condition > ; < (context declaration)
+    - GO TEST:
+        * to do :)
