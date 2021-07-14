@@ -1,5 +1,4 @@
-// Package json_struct declares all generic structures related to json.
-package json_struct
+package tools
 
 // Data_error contains error description.
 type Data_error struct {

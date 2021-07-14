@@ -6,29 +6,25 @@ ideal:
         * use builtin password cryptography ?
         * resilience: what append if connection is lost ?
         * dont update blocked column in api_users if is not necessary
+        * optimize double request like get/update
     - SERVER:
         * sanitize pseudo in [CRITICAL]
         * validator pseudo/password [CRITICAL]
         * sanitize/check str1 str2 in the fizzbuzz [CRITICAL]
-        * admin can block admin ?
-        * resilience: delete new user in postgres if error occured from redis ?
-        * unlock limit of fizzbuzz ( > 100), check overflow
-        * optimize double request like get/update
+        * resilience: delete new user in postgres if error occured from redis after creation ?
+        * limit the fizzbuzz ?
         * use env for init.sql ?
         * fizzbuzz route can be improved (is fat..)
-        * add options to the fizzbuzz request:
-            . choose the the number of request
-            . select specific int1/in2/limit/str1/str2
         * add a disconnection endpoint
     - PGADMIN:
         * change default logs ?
     - REDIS:
-        * can have too many tokens by user ?
         * add admins ?
+        * add stats ?
+        * can have too many tokens by user ?
+        * ^ add expire on token (redis and cookies...) ?
         * sanitize ? (with pseudo keys for exemple) [CRITICAL]
         * resilience: what append if connection is lost ?
-        * add stats with refresher
-        * add expire on token (redis and cookies...)
     - TEST:
         * structure in several files
         * more test on potential crash/session error

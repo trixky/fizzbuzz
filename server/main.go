@@ -10,9 +10,9 @@ import (
 
 	"github.com/julienschmidt/httprouter"
 
+	"fizzbuzz.com/v1/controllers"
 	"fizzbuzz.com/v1/database"
 	"fizzbuzz.com/v1/middlewares"
-	"fizzbuzz.com/v1/routes"
 )
 
 // Env contains all the necessary environment variables.
@@ -73,11 +73,11 @@ func main() {
 	mux := httprouter.New()
 
 	// defines the endpoints
-	mux.GET("/fizzbuzz", middlewares.Middleware_token(routes.Fizzbuzz))
-	mux.GET("/stats", middlewares.Middleware_token(routes.Stats))
-	mux.PATCH("/block", middlewares.Middleware_token(routes.Block))
-	mux.POST("/register", routes.Register)
-	mux.POST("/login", routes.Login)
+	mux.GET("/fizzbuzz", middlewares.Middleware_token(controllers.Fizzbuzz))
+	mux.GET("/stats", middlewares.Middleware_token(controllers.Stats))
+	mux.PATCH("/block", middlewares.Middleware_token(controllers.Block))
+	mux.POST("/register", controllers.Register)
+	mux.POST("/login", controllers.Login)
 
 	// up the server
 	log.Fatalln("init http: ERROR > ", http.ListenAndServe(":8080", mux))

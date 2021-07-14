@@ -8,7 +8,7 @@ import (
 	"net/http"
 
 	"fizzbuzz.com/v1/database"
-	"fizzbuzz.com/v1/json_struct"
+	"fizzbuzz.com/v1/tools"
 	"github.com/julienschmidt/httprouter"
 	uuid "github.com/satori/go.uuid"
 )
@@ -50,7 +50,7 @@ func Middleware_token(toto func(res http.ResponseWriter, req *http.Request, ps h
 			// If the cookie is corrupted or missing.
 			res.WriteHeader(http.StatusUnauthorized)
 			res.Header().Set("Content-Type", "application/json")
-			json.NewEncoder(res).Encode(json_struct.Data_error{Error: "'session' cookie is corrupted or missing"})
+			json.NewEncoder(res).Encode(tools.Data_error{Error: "'session' cookie is corrupted or missing"})
 			return
 		}
 
@@ -60,7 +60,7 @@ func Middleware_token(toto func(res http.ResponseWriter, req *http.Request, ps h
 			// If the cookie format is corrupted.
 			res.WriteHeader(http.StatusUnauthorized)
 			res.Header().Set("Content-Type", "application/json")
-			json.NewEncoder(res).Encode(json_struct.Data_error{Error: "'session' cookie format is corrupted"})
+			json.NewEncoder(res).Encode(tools.Data_error{Error: "'session' cookie format is corrupted"})
 			return
 
 		}
@@ -70,7 +70,7 @@ func Middleware_token(toto func(res http.ResponseWriter, req *http.Request, ps h
 			// If the token from the cookie is not valid.
 			res.WriteHeader(http.StatusUnauthorized)
 			res.Header().Set("Content-Type", "application/json")
-			json.NewEncoder(res).Encode(json_struct.Data_error{Error: "your token from 'session' cookie is not valid"})
+			json.NewEncoder(res).Encode(tools.Data_error{Error: "your token from 'session' cookie is not valid"})
 			return
 		}
 
