@@ -1,6 +1,6 @@
 # fizzbuzz
 
-A small [fizzbuzz](https://en.wikipedia.org/wiki/Fizz_buzz) API implementation using [go](https://golang.org/), [postgresql](https://www.postgresql.org/), [redis](https://redis.io/), [pgadmin](https://www.pgadmin.org/) and a [jest](https://jestjs.io/)/[supertest](https://www.npmjs.com/package/supertest) tester. **(docker-compose)**
+A small [fizzbuzz](https://en.wikipedia.org/wiki/Fizz_buzz) API implementation with a [clean architecture](https://medium.com/perry-street-software-engineering/clean-api-architecture-2b57074084d5) using [go](https://golang.org/), [postgresql](https://www.postgresql.org/), [redis](https://redis.io/), [pgadmin](https://www.pgadmin.org/) and a [jest](https://jestjs.io/)/[supertest](https://www.npmjs.com/package/supertest) tester. **(docker-compose)**
 
 ## Usage
 

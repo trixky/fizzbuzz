@@ -14,7 +14,7 @@ Users have the following attributes:
 
 > Privileges (admin) cannot be changed from the API.
 
-> An administrator \[admin:1234\] is initialized by default.
+> An administrator \[admin:abcdABCD1234@\] is created by default.
 
 # endpoints
 
@@ -26,10 +26,19 @@ To access the different API services (mainly the generation of a fizzbuzz) you m
 
 - method: POST
 - url: /register
-- content-type: application/x-www-form-urlencoded
-- input keys:
-  - _pseudo_ \* (string)
-  - _password_ \* (string)
+- content-type: application/json
+- input format:
+
+```JSON5
+{
+    "pseudo":"my_pseudo",
+    "password":"my_password"
+}
+```
+
+> pseudo must be between 3 and 20 characters
+
+> password must be between 8 and 30 characters and must contain at least one lowercase, one uppercase, one number and one special character
 
 ### Response
 
@@ -55,10 +64,15 @@ Once registered, you must authenticate yourself in order to obtain a session tok
 
 - method: POST
 - url: /login
-- content-type: application/x-www-form-urlencoded
-- input keys:
-  - _pseudo_ \* (string)
-  - _password_ \* (string)
+- content-type: application/json
+- input format:
+
+```JSON5
+{
+    "pseudo":"my_pseudo",
+    "password":"my_password"
+}
+```
 
 ### Response
 
@@ -78,19 +92,24 @@ Once registered, you must authenticate yourself in order to obtain a session tok
 
 The heart of this API, it's up to you to build your personalized fizzbuzz!
 
+> To access this service, you must have a valid session token from the "session" cookie.
+
 ### Request
 
 - method: GET
 - url: /fizzbuzz
-- content-type: application/x-www-form-urlencoded
-- input keys:
+- query inputs:
   - _int1_ \* (integer)
   - _int2_ \* (integer)
   - _limit_ \* (integer)
   - _str1_ \* (string > max-length: 30)
   - _str2_ \* (string > max-length: 30)
 
-> To access this service, you must have a valid session token from the "session" cookie.
+> _int1_ can't be equal to _int2_
+
+> _int1_ and _int2_ cannot be greater than _limit_
+
+> _str1_ and _str2_ cannot be more than 30 characters
 
 ### Response
 
@@ -127,28 +146,16 @@ The heart of this API, it's up to you to build your personalized fizzbuzz!
 }
 ```
 
-or
-
-```JSON5
-{
-  "errors": [
-      "first reason...",
-      "another reason..."
-      // ...
-    ]
-}
-```
-
 ## Stats
 
 Are you curious about the most popular fizzbuzzes right now?
+
+> To access this service, you must have a valid session token from the "session" cookie.
 
 ### Request
 
 - method: GET
 - url: /stats
-
-> To access this service, you must have a valid session token from the "session" cookie.
 
 ### Response
 
@@ -198,16 +205,21 @@ Are you curious about the most popular fizzbuzzes right now?
 
 As said in the introduction, administrators can block or unblock accounts.
 
+> To access this service, you must have a valid session token from the "session" cookie with administrator privileges.
+
 ### Request
 
 - method: PATCH
 - url: /block
-- content-type: application/x-www-form-urlencoded
-- input keys:
-  - _pseudo_ \* (string)
-  - _block_status_ \* (boolean > ["true","false"])
+- content-type: application/json
+- input format:
 
-> To access this service, you must have a valid session token from the "session" cookie with administrator privileges.
+```JSON5
+{
+    "pseudo":"his_pseudo",
+    "block_status":"true" // need to be "true" or "false"
+}
+```
 
 ### Response
 
