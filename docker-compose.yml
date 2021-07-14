@@ -21,8 +21,8 @@ services:
     ports:
       - "8080:8080"
 
-  test:
-    build: ./test
+  supertest:
+    build: ./supertest
     environment:
       PGUSER: ${PGUSER}
       PGHOST: ${PGHOST}
@@ -30,9 +30,9 @@ services:
       PGDATABASE: ${PGDATABASE}
       PGPORT: ${PGPORT}
     volumes:
-      - ./test/app.test.js:/home/node/test/app.test.js
-      - ./test/package.json:/home/node/test/package.json
-      - ./test/jest.config.js:/home/node/test/jest.config.js
+      - ./supertest/app.test.js:/home/node/supertest/app.test.js
+      - ./supertest/package.json:/home/node/supertest/package.json
+      - ./supertest/jest.config.js:/home/node/supertest/jest.config.js
     working_dir: /home/node/test
     command: npx jest --runInBand
     depends_on:

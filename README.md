@@ -1,6 +1,6 @@
 # fizzbuzz
 
-A small [fizzbuzz](https://en.wikipedia.org/wiki/Fizz_buzz) API implementation with a [clean architecture](https://medium.com/perry-street-software-engineering/clean-api-architecture-2b57074084d5) using [go](https://golang.org/), [postgresql](https://www.postgresql.org/), [redis](https://redis.io/), [pgadmin](https://www.pgadmin.org/) and a [jest](https://jestjs.io/)/[supertest](https://www.npmjs.com/package/supertest) tester. **(docker-compose)**
+A small [fizzbuzz](https://en.wikipedia.org/wiki/Fizz_buzz) API implementation with a [clean architecture](https://medium.com/perry-street-software-engineering/clean-api-architecture-2b57074084d5) using [go](https://golang.org/), [postgresql](https://www.postgresql.org/), [redis](https://redis.io/), [pgadmin](https://www.pgadmin.org/) and a [supertest](https://www.npmjs.com/package/supertest)/[jest](https://jestjs.io/) tester. **(docker-compose)**
 
 ## Usage
 
@@ -29,12 +29,12 @@ Pgadmin is accessible on [localhost:5050](http://localhost:5050/).
 ![screenshot](https://raw.githubusercontent.com/trixky/fizzbuzz/main/demo/pgadmin_login.png)
 ![screenshot](https://raw.githubusercontent.com/trixky/fizzbuzz/main/demo/pgadmin_connection.png)
 
-## Test
+## supertest
 
-The API synchronous tester is built with [jest](https://jestjs.io/)/[supertest](https://www.npmjs.com/package/supertest) on [node.js](https://nodejs.org/).
+The API synchronous tester is built with [supertest](https://www.npmjs.com/package/supertest)/[jest](https://jestjs.io/) on [node.js](https://nodejs.org/).
 
 ```bash
-docker-compose run --rm test
+docker-compose run --rm supertest
 ```
 
 > The test erase all data on postgresql and redis!

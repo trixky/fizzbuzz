@@ -1,10 +1,10 @@
 FROM node:latest
 
 # create the project folder
-RUN mkdir /home/node/test
+RUN mkdir /home/node/supertest
 # copy the source
-COPY . /home/node/test
-WORKDIR /home/node/test
+COPY . /home/node/supertest
+WORKDIR /home/node/supertest
 
 # install dependencies
 RUN npm install -g npm@7.19.1

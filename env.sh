@@ -11,11 +11,11 @@ export POSTGRES_PORT=5432
 export PGADMIN_DEFAULT_EMAIL=trixky@fizz.buzz
 export PGADMIN_DEFAULT_PASSWORD=1234
 
-# test / postgres
+# supertest / postgres
 export PGUSER=$POSTGRES_USER
 export PGPASSWORD=$POSTGRES_PASSWORD
 export PGDATABASE=$POSTGRES_DB
 
-# test
+# supertest
 export PGHOST=$POSTGRES_HOST
 export PGPORT=$POSTGRES_PORT

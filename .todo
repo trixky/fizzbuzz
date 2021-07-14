@@ -23,10 +23,10 @@ ideal:
         * ^ add expire on token (redis and cookies...) ?
         * sanitize ? (with pseudo keys for exemple) [CRITICAL]
         * resilience: what append if connection is lost ?
-    - TEST:
+    - SUPERTEST:
         * structure in several files
         * more test on potential crash/session error
         * more test on fizzbuzz result
         * check response content-type ?
-    - GO TEST:
+    - GOTEST:
         * to do :)
