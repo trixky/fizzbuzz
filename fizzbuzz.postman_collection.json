@@ -7,23 +7,28 @@
 	"item": [
 		{
 			"name": "login",
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"exec": [
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
 			"request": {
 				"method": "POST",
 				"header": [],
 				"body": {
-					"mode": "urlencoded",
-					"urlencoded": [
-						{
-							"key": "pseudo",
-							"value": "admin",
-							"type": "text"
-						},
-						{
-							"key": "password",
-							"value": "1234",
-							"type": "text"
+					"mode": "raw",
+					"raw": "{\n    \"pseudo\":\"admin\",\n    \"password\":\"abcdABCD1234@\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
 						}
-					]
+					}
 				},
 				"url": {
 					"raw": "localhost:8080/login",
@@ -44,19 +49,13 @@
 				"method": "POST",
 				"header": [],
 				"body": {
-					"mode": "urlencoded",
-					"urlencoded": [
-						{
-							"key": "pseudo",
-							"value": "trixky",
-							"type": "text"
-						},
-						{
-							"key": "password",
-							"value": "1234",
-							"type": "text"
+					"mode": "raw",
+					"raw": "{\n    \"pseudo\":\"chat\",\n    \"password\":\"abcdABCD1234@\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
 						}
-					]
+					}
 				},
 				"url": {
 					"raw": "localhost:8080/register",
@@ -73,9 +72,21 @@
 		},
 		{
 			"name": "fizzbuzz",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
 			"request": {
 				"method": "GET",
 				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
 				"url": {
 					"raw": "http://localhost:8080/fizzbuzz?int1=3&int2=5&limit=100&str1=fizz&str2=buzz",
 					"protocol": "http",
@@ -136,20 +147,13 @@
 				"method": "PATCH",
 				"header": [],
 				"body": {
-					"mode": "urlencoded",
-					"urlencoded": [
-						{
-							"key": "pseudo",
-							"value": "trixky",
-							"type": "text"
-						},
-						{
-							"key": "block_status",
-							"value": "true",
-							"description": "true or false",
-							"type": "text"
+					"mode": "raw",
+					"raw": "{\n    \"pseudo\":\"chat\",\n    \"block_status\":\"true\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
 						}
-					]
+					}
 				},
 				"url": {
 					"raw": "localhost:8080/block",
