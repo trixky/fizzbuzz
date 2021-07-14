@@ -33,7 +33,7 @@ services:
       - ./supertest/app.test.js:/home/node/supertest/app.test.js
       - ./supertest/package.json:/home/node/supertest/package.json
       - ./supertest/jest.config.js:/home/node/supertest/jest.config.js
-    working_dir: /home/node/test
+    working_dir: /home/node/supertest
     command: npx jest --runInBand
     depends_on:
       - postgres
