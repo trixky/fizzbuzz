@@ -54,6 +54,9 @@ beforeAll(function (done) {
       await client_postgres.query(
         "DELETE FROM api_users WHERE pseudo <> 'admin'"
       );
+      await client_postgres.query(
+        "DELETE FROM fizzbuzz_request_statistics"
+      );
       await client_postgres.end();
     } catch (err) {
       return console.error("INIT > POSTGRES > FAILED (" + err + ")");
@@ -94,12 +97,14 @@ describe("API test", function () {
 
   // ===================================== REGISTER
   describe("/register", function () {
-    it("register @chat:1234", (done) => {
+    it("register @chat:abcdABCD1234@", (done) => {
       request
         .post("/register")
-        .type("form")
-        .field("pseudo", "chat")
-        .field("password", "1234")
+        .set("Content-type", "application/json")
+        .send({
+          pseudo: "chat",
+          password: "abcdABCD1234@",
+        })
         .expect(200)
         .end((err) => {
           try {
@@ -110,12 +115,14 @@ describe("API test", function () {
           }
         });
     });
-    it("register @chien:1234", (done) => {
+    it("register @chien:abcdABCD1234@", (done) => {
       request
         .post("/register")
-        .type("form")
-        .field("pseudo", "chien")
-        .field("password", "1234")
+        .set("Content-type", "application/json")
+        .send({
+          pseudo: "chien",
+          password: "abcdABCD1234@",
+        })
         .expect(200)
         .end((err) => {
           try {
@@ -126,12 +133,14 @@ describe("API test", function () {
           }
         });
     });
-    it("register @chien:1234 #must_fail", (done) => {
+    it("register @chien:abcdABCD1234@ #must_fail", (done) => {
       request
         .post("/register")
-        .type("form")
-        .field("pseudo", "chien")
-        .field("password", "1234")
+        .set("Content-type", "application/json")
+        .send({
+          pseudo: "chien",
+          password: "abcdABCD1234@",
+        })
         .expect(409)
         .end((err) => {
           try {
@@ -148,9 +157,9 @@ describe("API test", function () {
     it("login @?:? #must_fail", (done) => {
       request
         .post("/login")
-        .type("form")
-        .field("password", "1234")
-        .expect(400)
+        .set("Content-type", "application/json")
+        .send({})
+        .expect(401)
         .end((err, res) => {
           try {
             expect(err).toBe(null);
@@ -161,12 +170,14 @@ describe("API test", function () {
           }
         });
     });
-    it("login @?:1234 #must_fail", (done) => {
+    it("login @?:abcdABCD1234@ #must_fail", (done) => {
       request
         .post("/login")
-        .type("form")
-        .field("password", "1234")
-        .expect(400)
+        .set("Content-type", "application/json")
+        .send({
+          password: "abcdABCD1234@",
+        })
+        .expect(401)
         .end((err, res) => {
           try {
             expect(err).toBe(null);
@@ -180,9 +191,11 @@ describe("API test", function () {
     it("login @admin:? #must_fail", (done) => {
       request
         .post("/login")
-        .type("form")
-        .field("password", "1234")
-        .expect(400)
+        .set("Content-type", "application/json")
+        .send({
+          pseudo: "admin",
+        })
+        .expect(401)
         .end((err, res) => {
           try {
             expect(err).toBe(null);
@@ -196,9 +209,11 @@ describe("API test", function () {
     it("login @admin:bad_password #must_fail", (done) => {
       request
         .post("/login")
-        .type("form")
-        .field("pseudo", "admin")
-        .field("password", "bad_password")
+        .set("Content-type", "application/json")
+        .send({
+          pseudo: "admin",
+          password: "bad_passwordz",
+        })
         .expect(401)
         .end((err, res) => {
           try {
@@ -210,12 +225,14 @@ describe("API test", function () {
           }
         });
     });
-    it("login @admin:1234", (done) => {
+    it("login @admin:abcdABCD1234@", (done) => {
       request
         .post("/login")
-        .type("form")
-        .field("pseudo", "admin")
-        .field("password", "1234")
+        .set("Content-type", "application/json")
+        .send({
+          pseudo: "admin",
+          password: "abcdABCD1234@",
+        })
         .expect(200)
         .end((err, res) => {
           try {
@@ -227,12 +244,14 @@ describe("API test", function () {
           }
         });
     });
-    it("login @chat:1234", (done) => {
+    it("login @chat:abcdABCD1234@", (done) => {
       request
         .post("/login")
-        .type("form")
-        .field("pseudo", "chat")
-        .field("password", "1234")
+        .set("Content-type", "application/json")
+        .send({
+          pseudo: "chat",
+          password: "abcdABCD1234@",
+        })
         .expect(200)
         .end((err, res) => {
           try {
@@ -244,12 +263,14 @@ describe("API test", function () {
           }
         });
     });
-    it("login @chien:1234", (done) => {
+    it("login @chien:abcdABCD1234@", (done) => {
       request
         .post("/login")
-        .type("form")
-        .field("pseudo", "chien")
-        .field("password", "1234")
+        .set("Content-type", "application/json")
+        .send({
+          pseudo: "chien",
+          password: "abcdABCD1234@",
+        })
         .expect(200)
         .end((err, res) => {
           try {
@@ -265,25 +286,25 @@ describe("API test", function () {
   // ===================================== FIZZBUZZ
   describe("/fizzbuzz", function () {
     it("fizzbuzz @? #must_fail", (done) => {
-        request
-          .get("/fizzbuzz")
-          .query({
-            int1: "3",
-            int2: "5",
-            limit: "30",
-            str1: "fizz",
-            str2: "buzz",
-          })
-          .expect(401)
-          .end((err) => {
-            try {
-              expect(err).toBe(null);
-              done();
-            } catch (err) {
-              done(err);
-            }
-          });
-      });
+      request
+        .get("/fizzbuzz")
+        .query({
+          int1: "3",
+          int2: "5",
+          limit: "30",
+          str1: "fizz",
+          str2: "buzz",
+        })
+        .expect(401)
+        .end((err) => {
+          try {
+            expect(err).toBe(null);
+            done();
+          } catch (err) {
+            done(err);
+          }
+        });
+    });
     it("fizzbuzz @admin", (done) => {
       request
         .get("/fizzbuzz")
@@ -414,9 +435,11 @@ describe("API test", function () {
     it("block @? > @chien [true] #must_fail", (done) => {
       request
         .patch("/block")
-        .type("form")
-        .field("pseudo", "chien")
-        .field("block_status", "true")
+        .set("Content-type", "application/json")
+        .send({
+          pseudo: "chien",
+          block_status: "true",
+        })
         .expect(401)
         .end((err) => {
           try {
@@ -431,9 +454,11 @@ describe("API test", function () {
       request
         .patch("/block")
         .set("Cookie", users_session_cookies.chat)
-        .type("form")
-        .field("pseudo", "chien")
-        .field("block_status", "true")
+        .set("Content-type", "application/json")
+        .send({
+          pseudo: "chien",
+          block_status: "true",
+        })
         .expect(401)
         .end((err) => {
           try {
@@ -448,9 +473,11 @@ describe("API test", function () {
       request
         .patch("/block")
         .set("Cookie", users_session_cookies.admin)
-        .type("form")
-        .field("pseudo", "chien")
-        .field("block_status", "true")
+        .set("Content-type", "application/json")
+        .send({
+          pseudo: "chien",
+          block_status: "true",
+        })
         .expect(200)
         .end((err) => {
           try {
@@ -482,12 +509,14 @@ describe("API test", function () {
           }
         });
     });
-    it("login @chien:1234 #must_fail", (done) => {
+    it("login @chien:abcdABCD1234@ #must_fail", (done) => {
       request
         .post("/login")
-        .type("form")
-        .field("pseudo", "chien")
-        .field("password", "1234")
+        .set("Content-type", "application/json")
+        .send({
+          pseudo: "chien",
+          password: "abcdABCD1234@",
+        })
         .expect(401)
         .end((err, res) => {
           try {
@@ -503,9 +532,11 @@ describe("API test", function () {
       request
         .patch("/block")
         .set("Cookie", users_session_cookies.admin)
-        .type("form")
-        .field("pseudo", "chien")
-        .field("block_status", "false")
+        .set("Content-type", "application/json")
+        .send({
+          pseudo: "chien",
+          block_status: "false",
+        })
         .expect(200)
         .end((err) => {
           try {
@@ -516,12 +547,14 @@ describe("API test", function () {
           }
         });
     });
-    it("login @chien:1234", (done) => {
+    it("login @chien:abcdABCD1234@", (done) => {
       request
         .post("/login")
-        .type("form")
-        .field("pseudo", "chien")
-        .field("password", "1234")
+        .set("Content-type", "application/json")
+        .send({
+          pseudo: "chien",
+          password: "abcdABCD1234@",
+        })
         .expect(200)
         .end((err, res) => {
           try {

@@ -1,9 +1,9 @@
 package extractors
 
 import (
-	"encoding/json"
 	"errors"
 	"net/http"
+	"strconv"
 )
 
 type Extracted_fizzbuzz struct {
@@ -17,22 +17,22 @@ type Extracted_fizzbuzz struct {
 func Extract_fizzbuzz(req *http.Request) (Extracted_fizzbuzz, error) {
 	extracted_fizzbuzz := Extracted_fizzbuzz{}
 
-	decoder := json.NewDecoder(req.Body)
-
-	if err := decoder.Decode(&extracted_fizzbuzz); err != nil {
-		return extracted_fizzbuzz, errors.New("invalid request body")
-	}
+	extracted_fizzbuzz.Int1, _ = strconv.Atoi(req.URL.Query().Get("int1"))
+	extracted_fizzbuzz.Int2, _ = strconv.Atoi(req.URL.Query().Get("int2"))
+	extracted_fizzbuzz.Limit, _ = strconv.Atoi(req.URL.Query().Get("limit"))
+	extracted_fizzbuzz.Str1 = req.URL.Query().Get("str1")
+	extracted_fizzbuzz.Str2 = req.URL.Query().Get("str2")
 
 	if extracted_fizzbuzz.Int1 < 1 {
-		return extracted_fizzbuzz, errors.New("int1 is missing or not strictly positive")
+		return extracted_fizzbuzz, errors.New("int1 is missing or not strictly positive or bad formated")
 	}
 
 	if extracted_fizzbuzz.Int2 < 1 {
-		return extracted_fizzbuzz, errors.New("int2 is missing or not strictly positive")
+		return extracted_fizzbuzz, errors.New("int2 is missing or not strictly positive or bad formated")
 	}
 
 	if extracted_fizzbuzz.Limit < 1 {
-		return extracted_fizzbuzz, errors.New("limit is missing or not strictly positive")
+		return extracted_fizzbuzz, errors.New("limit is missing or not strictly positive or bad formated")
 	}
 
 	if extracted_fizzbuzz.Int1 == extracted_fizzbuzz.Int2 {

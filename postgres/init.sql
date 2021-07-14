@@ -17,4 +17,4 @@ CREATE TABLE api_users (
     admin BOOLEAN DEFAULT 'false' NOT NULL
 );
 
-INSERT INTO api_users (pseudo, password, admin) VALUES ('admin', '81dc9bdb52d04dc20036dbd8313ed055', 'true');
+INSERT INTO api_users (pseudo, password, admin) VALUES ('admin', 'c54b18a947c806a48d7fd825ec6aea73', 'true');
