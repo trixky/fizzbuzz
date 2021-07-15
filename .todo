@@ -14,6 +14,7 @@ ideal:
         * limit the fizzbuzz ?
         * use env for init.sql ?
         * add a disconnection endpoint (for delete redis keys)
+        * return ref for optimize
     - PGADMIN:
         ...
     - REDIS:
@@ -24,9 +25,9 @@ ideal:
         * sanitize ? (with pseudo keys for exemple) [CRITICAL]
         * resilience: what append if connection is lost ?
     - SUPERTEST:
-        * structure in several files
+        * split the code in several files
         * more test on potential crash/session error
         * more test on fizzbuzz result
-        * check response content-type ?
+        * more checks on each test
     - GOTEST:
         * to do :)

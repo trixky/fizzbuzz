@@ -1,3 +1,4 @@
+// Package extractors allows to extract the parameters of requests
 package extractors
 
 import (
@@ -11,7 +12,8 @@ type Extracted_block struct {
 	Block_status string `json:"block_status"` // "true" or "false"
 }
 
-func Extract_block(req *http.Request) (Extracted_block, error) {
+// Extracts_block extracts parameters frome the /block endpoint
+func Extracts_block(req *http.Request) (Extracted_block, error) {
 	extracted_block := Extracted_block{}
 
 	decoder := json.NewDecoder(req.Body)

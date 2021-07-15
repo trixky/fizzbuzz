@@ -14,7 +14,8 @@ type Extracted_fizzbuzz struct {
 	Str2  string `json:"str2"`
 }
 
-func Extract_fizzbuzz(req *http.Request) (Extracted_fizzbuzz, error) {
+// Extracts_block extracts parameters frome the /fizzbuzz endpoint
+func Extracts_fizzbuzz(req *http.Request) (Extracted_fizzbuzz, error) {
 	extracted_fizzbuzz := Extracted_fizzbuzz{}
 
 	extracted_fizzbuzz.Int1, _ = strconv.Atoi(req.URL.Query().Get("int1"))

@@ -16,7 +16,7 @@ func Login(res http.ResponseWriter, req *http.Request, ps httprouter.Params) {
 	res.Header().Set("Content-Type", "application/json")
 
 	// #extraction
-	extracted_login, err := extractors.Extract_login(req)
+	extracted_login, err := extractors.Extracts_login(req)
 	if err != nil {
 		res.WriteHeader(http.StatusUnauthorized)
 		json.NewEncoder(res).Encode(tools.Data_error{Error: err.Error()})
@@ -51,7 +51,7 @@ func Register(res http.ResponseWriter, req *http.Request, ps httprouter.Params) 
 	res.Header().Set("Content-Type", "application/json")
 
 	// #extraction
-	extracted_register, err := extractors.Extract_register(req)
+	extracted_register, err := extractors.Extracts_register(req)
 	if err != nil {
 		res.WriteHeader(http.StatusUnauthorized)
 		json.NewEncoder(res).Encode(tools.Data_error{Error: err.Error()})
@@ -78,7 +78,7 @@ func Block(res http.ResponseWriter, req *http.Request, ps httprouter.Params) {
 	pseudo, _ := req.Context().Value(middlewares.Key_middleware_infos).(*middlewares.Middleware_infos).Get("pseudo") // ignore err
 
 	// #extraction
-	extracted_block, err := extractors.Extract_block(req)
+	extracted_block, err := extractors.Extracts_block(req)
 	if err != nil {
 		res.WriteHeader(http.StatusUnauthorized)
 		json.NewEncoder(res).Encode(tools.Data_error{Error: err.Error()})

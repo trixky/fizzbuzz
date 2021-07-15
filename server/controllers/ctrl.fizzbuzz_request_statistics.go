@@ -17,7 +17,7 @@ func Fizzbuzz(res http.ResponseWriter, req *http.Request, ps httprouter.Params) 
 	res.Header().Set("Content-Type", "application/json")
 
 	// #extraction
-	extracted_fizzbuzz, err := extractors.Extract_fizzbuzz(req)
+	extracted_fizzbuzz, err := extractors.Extracts_fizzbuzz(req)
 	if err != nil {
 		res.WriteHeader(http.StatusUnauthorized)
 		json.NewEncoder(res).Encode(tools.Data_error{Error: err.Error()})

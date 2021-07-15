@@ -3,6 +3,7 @@ package models
 
 import "gorm.io/gorm"
 
+// Fizzbuzz_request_statistics is the model corresponding to the "fizzbuzz_request_statistics" table.
 type Fizzbuzz_request_statistics struct {
 	gorm.Model
 	Int1           int    `gorm:"not null"`

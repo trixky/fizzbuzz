@@ -13,7 +13,8 @@ type Extracted_register struct {
 	Password string `json:"password"`
 }
 
-func Extract_register(req *http.Request) (extracted_register Extracted_register, err error) {
+// Extracts_block extracts parameters frome the /register endpoint
+func Extracts_register(req *http.Request) (extracted_register Extracted_register, err error) {
 	decoder := json.NewDecoder(req.Body)
 
 	if err := decoder.Decode(&extracted_register); err != nil {

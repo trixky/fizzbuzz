@@ -17,6 +17,7 @@ type Fizzbuzz_request_statistics struct {
 	Requests []Fizzbuzz_request_statistic `json:"requests"`
 }
 
+// Fizzbuzz_request_statistics_generator generates a list of statistics about fizzbuzz requests
 func Fizzbuzz_request_statistics_generator(results []models.Fizzbuzz_request_statistics) (fizzbuzz_request_statistics Fizzbuzz_request_statistics) {
 	for _, request := range results {
 		// encapsulates the most popular fizzbuzz requests.

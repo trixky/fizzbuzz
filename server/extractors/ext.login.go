@@ -11,7 +11,8 @@ type Extracted_login struct {
 	Password string `json:"password"`
 }
 
-func Extract_login(req *http.Request) (Extracted_login, error) {
+// Extracts_block extracts parameters frome the /login endpoint
+func Extracts_login(req *http.Request) (Extracted_login, error) {
 	extracted_login := Extracted_login{}
 
 	decoder := json.NewDecoder(req.Body)
