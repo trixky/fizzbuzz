@@ -18,6 +18,7 @@ func Login(res http.ResponseWriter, req *http.Request, ps httprouter.Params) {
 	// #extraction
 	extracted_login, err := extractors.Extracts_login(req)
 	if err != nil {
+		// If extraction failed.
 		res.WriteHeader(http.StatusUnauthorized)
 		json.NewEncoder(res).Encode(tools.Data_error{Error: err.Error()})
 		return
@@ -26,10 +27,12 @@ func Login(res http.ResponseWriter, req *http.Request, ps httprouter.Params) {
 	// #repository [log the api user and get his session token]
 	api_user, session_token, err := repositories.Login_api_users(extracted_login.Pseudo, extracted_login.Password)
 	if err != nil {
+		// If repository failed.
 		res.WriteHeader(http.StatusInternalServerError)
 		json.NewEncoder(res).Encode(tools.Data_error{Error: "internal server error"})
 		return
 	} else if api_user == nil {
+		// If pseudo or/and password wrong.
 		tools.Remove_session_cookie(res) // remove the potential old token from the client
 		res.WriteHeader(http.StatusUnauthorized)
 		json.NewEncoder(res).Encode(tools.Data_error{Error: "bad pseudo or/and password"})
@@ -53,6 +56,7 @@ func Register(res http.ResponseWriter, req *http.Request, ps httprouter.Params) 
 	// #extraction
 	extracted_register, err := extractors.Extracts_register(req)
 	if err != nil {
+		// If extraction failed.
 		res.WriteHeader(http.StatusUnauthorized)
 		json.NewEncoder(res).Encode(tools.Data_error{Error: err.Error()})
 		return
@@ -60,9 +64,11 @@ func Register(res http.ResponseWriter, req *http.Request, ps httprouter.Params) 
 
 	// #repository [register the api user]
 	if pseudo_already_taken, err := repositories.Register_api_users(extracted_register.Pseudo, extracted_register.Password); err != nil {
+		// If repository failed.
 		json.NewEncoder(res).Encode(tools.Data_error{Error: "internal server error"})
 		return
 	} else if pseudo_already_taken {
+		// If a user with this pseudo already exists
 		res.WriteHeader(http.StatusConflict)
 		json.NewEncoder(res).Encode(tools.Data_error{Error: "a user with this pseudo already exists"})
 		return
@@ -80,6 +86,7 @@ func Block(res http.ResponseWriter, req *http.Request, ps httprouter.Params) {
 	// #extraction
 	extracted_block, err := extractors.Extracts_block(req)
 	if err != nil {
+		// If extraction failed.
 		res.WriteHeader(http.StatusUnauthorized)
 		json.NewEncoder(res).Encode(tools.Data_error{Error: err.Error()})
 		return
@@ -87,6 +94,7 @@ func Block(res http.ResponseWriter, req *http.Request, ps httprouter.Params) {
 
 	// #repository [is the user admin ?]
 	if is_admin, err := repositories.Is_admin_api_users(pseudo); err != nil {
+		// If repository failed.
 		res.WriteHeader(http.StatusInternalServerError)
 		json.NewEncoder(res).Encode(tools.Data_error{Error: "internal server error"})
 		return
@@ -99,6 +107,7 @@ func Block(res http.ResponseWriter, req *http.Request, ps httprouter.Params) {
 
 	// #repository [block the api user]
 	if user_not_found, err := repositories.Block_api_users(extracted_block.Pseudo, extracted_block.Block_status); err != nil {
+		// If repository failed.
 		res.WriteHeader(http.StatusInternalServerError)
 		json.NewEncoder(res).Encode(tools.Data_error{Error: "internal server error"})
 		return

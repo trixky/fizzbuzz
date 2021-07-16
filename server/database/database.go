@@ -2,7 +2,11 @@
 package database
 
 import (
+	"fmt"
+	"log"
+
 	"fizzbuzz.com/v1/models"
+	"fizzbuzz.com/v1/tools"
 	redis "github.com/go-redis/redis"
 	"gorm.io/driver/postgres"
 	"gorm.io/gorm"
@@ -12,29 +16,40 @@ var Postgres *gorm.DB = nil
 var Redis *redis.Client = nil
 
 // Init_postgres initializes postgres.
-func Init_postgres(dsn string) (*gorm.DB, error) {
-	postgres, err := gorm.Open(postgres.Open(dsn), &gorm.Config{})
+// func Init_postgres(dsn string) *gorm.DB {
+func Init_postgres(env tools.Environment) *gorm.DB {
+	postgres, err := gorm.Open(postgres.Open("host="+env.Postgres_host+" user="+env.Postgres_user+" password="+env.Postgres_password+" dbname="+env.Postgres_db+" port="+env.Postgres_port+" sslmode=disable"), &gorm.Config{})
+	if err != nil {
+		log.Fatalln("init postgres: ERROR > ", err)
+	}
+
 	Postgres = postgres
 
-	if err == nil {
-		err = Postgres.AutoMigrate(&models.Api_users{})
+	if err := Postgres.AutoMigrate(&models.Api_users{}); err != nil {
+		log.Fatalln("init postgres: ERROR > ", err)
 	}
 
-	if err == nil {
-		err = Postgres.AutoMigrate(&models.Fizzbuzz_request_statistics{})
+	if err = Postgres.AutoMigrate(&models.Fizzbuzz_request_statistics{}); err != nil {
+		log.Fatalln("init postgres: ERROR > ", err)
 	}
 
-	return Postgres, err
+	fmt.Println("init postgres: SUCCESS > ", Postgres)
+
+	return Postgres
 }
 
 // Init_redis initializes redis.
-func Init_redis(addr string, password string, db int) (*redis.Client, error) {
+func Init_redis() *redis.Client {
 	Redis = redis.NewClient(&redis.Options{
-		Addr:     addr,
-		Password: password,
-		DB:       db,
+		Addr:     "redis:6379",
+		Password: "",
+		DB:       0,
 	})
-	_, err := Redis.Ping().Result()
+	if _, err := Redis.Ping().Result(); err != nil {
+		log.Fatalln("init redis: ERROR > ", err)
+	}
 
-	return Redis, err
+	fmt.Println("init redis: SUCCESS > ", Redis)
+
+	return Redis
 }

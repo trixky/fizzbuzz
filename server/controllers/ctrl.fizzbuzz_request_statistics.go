@@ -19,6 +19,7 @@ func Fizzbuzz(res http.ResponseWriter, req *http.Request, ps httprouter.Params) 
 	// #extraction
 	extracted_fizzbuzz, err := extractors.Extracts_fizzbuzz(req)
 	if err != nil {
+		// If extraction failed.
 		res.WriteHeader(http.StatusUnauthorized)
 		json.NewEncoder(res).Encode(tools.Data_error{Error: err.Error()})
 		return
@@ -26,6 +27,7 @@ func Fizzbuzz(res http.ResponseWriter, req *http.Request, ps httprouter.Params) 
 
 	// #repository [create or increment fizzbuzz_request_statistics]
 	if _, err := repositories.Create_or_increment_fizzbuzz_request_statistics(extracted_fizzbuzz.Int1, extracted_fizzbuzz.Int2, extracted_fizzbuzz.Limit, extracted_fizzbuzz.Str1, extracted_fizzbuzz.Str2); err != nil {
+		// If repository failed.
 		res.WriteHeader(http.StatusInternalServerError)
 		json.NewEncoder(res).Encode(tools.Data_error{Error: "internal server error"})
 		return
@@ -41,10 +43,10 @@ func Fizzbuzz(res http.ResponseWriter, req *http.Request, ps httprouter.Params) 
 // Stats handles the [GET /stats] request.
 func Stats(res http.ResponseWriter, req *http.Request, ps httprouter.Params) {
 	res.Header().Set("Content-Type", "application/json")
-
 	// #repository [get all fizzbuzz_request_statistics]
 	results, err := repositories.Getall_fizzbuzz_request_statistics()
 	if err != nil {
+		// If repository failed.
 		res.WriteHeader(http.StatusInternalServerError)
 		json.NewEncoder(res).Encode(tools.Data_error{Error: "internal server error"})
 		return
