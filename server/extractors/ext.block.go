@@ -7,32 +7,30 @@ import (
 	"net/http"
 )
 
-type Extracted_block struct {
+type Block struct {
 	Pseudo       string `json:"pseudo"`
 	Block_status string `json:"block_status"` // "true" or "false"
 }
 
-// Extracts_block extracts parameters frome the /block endpoint
-func Extracts_block(req *http.Request) (Extracted_block, error) {
-	extracted_block := Extracted_block{}
-
+// Extracts extracts parameters from the request
+func (b *Block) Extracts(req *http.Request) error {
 	decoder := json.NewDecoder(req.Body)
 
-	if err := decoder.Decode(&extracted_block); err != nil {
-		return extracted_block, errors.New("invalid request body")
+	if err := decoder.Decode(&b); err != nil {
+		return errors.New("invalid request body")
 	}
 
-	if len(extracted_block.Pseudo) < 1 {
-		return extracted_block, errors.New("pseudo is missing")
+	if len(b.Pseudo) < 1 {
+		return errors.New("pseudo is missing")
 	}
 
-	if len(extracted_block.Block_status) < 1 {
-		return extracted_block, errors.New("block_status is missing")
+	if len(b.Block_status) < 1 {
+		return errors.New("block_status is missing")
 	}
 
-	if extracted_block.Block_status != "true" && extracted_block.Block_status != "false" {
-		return extracted_block, errors.New("block_status must have the value [true/false]")
+	if b.Block_status != "true" && b.Block_status != "false" {
+		return errors.New("block_status must have the value [true/false]")
 	}
 
-	return extracted_block, nil
+	return nil
 }

@@ -8,26 +8,26 @@ import (
 	"fizzbuzz.com/v1/tools"
 )
 
-type Extracted_register struct {
+type Register struct {
 	Pseudo   string `json:"pseudo"`
 	Password string `json:"password"`
 }
 
-// Extracts_block extracts parameters frome the /register endpoint
-func Extracts_register(req *http.Request) (extracted_register Extracted_register, err error) {
+// Extracts extracts parameters from the request
+func (r *Register) Extracts(req *http.Request) error {
 	decoder := json.NewDecoder(req.Body)
 
-	if err := decoder.Decode(&extracted_register); err != nil {
-		return extracted_register, errors.New("invalid request body")
+	if err := decoder.Decode(&r); err != nil {
+		return errors.New("invalid request body")
 	}
 
-	if len(extracted_register.Pseudo) < 3 || len(extracted_register.Pseudo) > 20 {
-		return extracted_register, errors.New("pseudo must be between 3 and 20 characters")
+	if len(r.Pseudo) < 3 || len(r.Pseudo) > 20 {
+		return errors.New("pseudo must be between 3 and 20 characters")
 	}
 
-	if err := tools.Password_is_valid_v1(extracted_register.Password); err != nil {
-		return extracted_register, err
+	if err := tools.Password_is_valid_v1(r.Password); err != nil {
+		return err
 	}
 
-	return extracted_register, nil
+	return nil
 }

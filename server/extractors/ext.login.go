@@ -6,28 +6,26 @@ import (
 	"net/http"
 )
 
-type Extracted_login struct {
+type Login struct {
 	Pseudo   string `json:"pseudo"`
 	Password string `json:"password"`
 }
 
-// Extracts_block extracts parameters frome the /login endpoint
-func Extracts_login(req *http.Request) (Extracted_login, error) {
-	extracted_login := Extracted_login{}
-
+// Extracts extracts parameters from the request
+func (l *Login) Extracts(req *http.Request) error {
 	decoder := json.NewDecoder(req.Body)
 
-	if err := decoder.Decode(&extracted_login); err != nil {
-		return extracted_login, errors.New("invalid request body")
+	if err := decoder.Decode(&l); err != nil {
+		return errors.New("invalid request body")
 	}
 
-	if len(extracted_login.Pseudo) < 1 {
-		return extracted_login, errors.New("pseudo is missing")
+	if len(l.Pseudo) < 1 {
+		return errors.New("pseudo is missing")
 	}
 
-	if len(extracted_login.Password) < 1 {
-		return extracted_login, errors.New("password is missing")
+	if len(l.Password) < 1 {
+		return errors.New("password is missing")
 	}
 
-	return extracted_login, nil
+	return nil
 }

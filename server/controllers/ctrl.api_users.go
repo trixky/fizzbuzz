@@ -16,8 +16,8 @@ func Login(res http.ResponseWriter, req *http.Request, ps httprouter.Params) {
 	res.Header().Set("Content-Type", "application/json")
 
 	// #extraction
-	extracted_login, err := extractors.Extracts_login(req)
-	if err != nil {
+	extractor := extractors.Login{}
+	if err := extractor.Extracts(req); err != nil {
 		// If extraction failed.
 		res.WriteHeader(http.StatusUnauthorized)
 		json.NewEncoder(res).Encode(tools.Data_error{Error: err.Error()})
@@ -25,7 +25,7 @@ func Login(res http.ResponseWriter, req *http.Request, ps httprouter.Params) {
 	}
 
 	// #repository [log the api user and get his session token]
-	api_user, session_token, err := repositories.Login_api_users(extracted_login.Pseudo, extracted_login.Password)
+	api_user, session_token, err := repositories.Login_api_users(extractor.Pseudo, extractor.Password)
 	if err != nil {
 		// If repository failed.
 		res.WriteHeader(http.StatusInternalServerError)
@@ -54,8 +54,8 @@ func Register(res http.ResponseWriter, req *http.Request, ps httprouter.Params) 
 	res.Header().Set("Content-Type", "application/json")
 
 	// #extraction
-	extracted_register, err := extractors.Extracts_register(req)
-	if err != nil {
+	extractor := extractors.Register{}
+	if err := extractor.Extracts(req); err != nil {
 		// If extraction failed.
 		res.WriteHeader(http.StatusUnauthorized)
 		json.NewEncoder(res).Encode(tools.Data_error{Error: err.Error()})
@@ -63,7 +63,7 @@ func Register(res http.ResponseWriter, req *http.Request, ps httprouter.Params) 
 	}
 
 	// #repository [register the api user]
-	if pseudo_already_taken, err := repositories.Register_api_users(extracted_register.Pseudo, extracted_register.Password); err != nil {
+	if pseudo_already_taken, err := repositories.Register_api_users(extractor.Pseudo, extractor.Password); err != nil {
 		// If repository failed.
 		json.NewEncoder(res).Encode(tools.Data_error{Error: "internal server error"})
 		return
@@ -84,8 +84,8 @@ func Block(res http.ResponseWriter, req *http.Request, ps httprouter.Params) {
 	pseudo, _ := req.Context().Value(middlewares.Key_middleware_infos).(*middlewares.Middleware_infos).Get("pseudo") // ignore err
 
 	// #extraction
-	extracted_block, err := extractors.Extracts_block(req)
-	if err != nil {
+	extractor := extractors.Block{}
+	if err := extractor.Extracts(req); err != nil {
 		// If extraction failed.
 		res.WriteHeader(http.StatusUnauthorized)
 		json.NewEncoder(res).Encode(tools.Data_error{Error: err.Error()})
@@ -106,7 +106,7 @@ func Block(res http.ResponseWriter, req *http.Request, ps httprouter.Params) {
 	}
 
 	// #repository [block the api user]
-	if user_not_found, err := repositories.Block_api_users(extracted_block.Pseudo, extracted_block.Block_status); err != nil {
+	if user_not_found, err := repositories.Block_api_users(extractor.Pseudo, extractor.Block_status); err != nil {
 		// If repository failed.
 		res.WriteHeader(http.StatusInternalServerError)
 		json.NewEncoder(res).Encode(tools.Data_error{Error: "internal server error"})

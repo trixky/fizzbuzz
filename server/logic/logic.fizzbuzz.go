@@ -12,7 +12,7 @@ type Data_fizzbuzz struct {
 }
 
 // fizzbuzz_generator generates the fizzbuzz from user inputs.
-func Fizzbuzz_generator(extracted_fizzbuzz *extractors.Extracted_fizzbuzz) (data_fizzbuzz Data_fizzbuzz) {
+func Fizzbuzz_generator(extracted_fizzbuzz *extractors.Fizzbuzz) (data_fizzbuzz Data_fizzbuzz) {
 	data_fizzbuzz.Fizzbuzz = make([]string, extracted_fizzbuzz.Limit)
 
 	for i := 0; i < extracted_fizzbuzz.Limit; i++ {

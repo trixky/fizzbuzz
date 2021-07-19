@@ -110,7 +110,7 @@ func TestFizzbuzz_generator(t *testing.T) {
 		"fizz",
 		"buzz"}}
 
-	fizzbuzz := Fizzbuzz_generator(&extractors.Extracted_fizzbuzz{Int1: 3, Int2: 5, Limit: 100, Str1: "fizz", Str2: "buzz"})
+	fizzbuzz := Fizzbuzz_generator(&extractors.Fizzbuzz{Int1: 3, Int2: 5, Limit: 100, Str1: "fizz", Str2: "buzz"})
 
 	for index, element := range expected_fizzbuzz.Fizzbuzz {
 		if element != fizzbuzz.Fizzbuzz[index] {

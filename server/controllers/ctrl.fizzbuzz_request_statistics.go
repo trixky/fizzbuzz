@@ -17,8 +17,8 @@ func Fizzbuzz(res http.ResponseWriter, req *http.Request, ps httprouter.Params) 
 	res.Header().Set("Content-Type", "application/json")
 
 	// #extraction
-	extracted_fizzbuzz, err := extractors.Extracts_fizzbuzz(req)
-	if err != nil {
+	extractor := extractors.Fizzbuzz{}
+	if err := extractor.Extracts(req); err != nil {
 		// If extraction failed.
 		res.WriteHeader(http.StatusUnauthorized)
 		json.NewEncoder(res).Encode(tools.Data_error{Error: err.Error()})
@@ -26,15 +26,15 @@ func Fizzbuzz(res http.ResponseWriter, req *http.Request, ps httprouter.Params) 
 	}
 
 	// #repository [create or increment fizzbuzz_request_statistics]
-	if _, err := repositories.Create_or_increment_fizzbuzz_request_statistics(extracted_fizzbuzz.Int1, extracted_fizzbuzz.Int2, extracted_fizzbuzz.Limit, extracted_fizzbuzz.Str1, extracted_fizzbuzz.Str2); err != nil {
+	if _, err := repositories.Create_or_increment_fizzbuzz_request_statistics(extractor.Int1, extractor.Int2, extractor.Limit, extractor.Str1, extractor.Str2); err != nil {
 		// If repository failed.
 		res.WriteHeader(http.StatusInternalServerError)
 		json.NewEncoder(res).Encode(tools.Data_error{Error: "internal server error"})
 		return
 	}
 
-	// #usecase [generates fizzbuzz]
-	data_fizzbuzz := logic.Fizzbuzz_generator(&extracted_fizzbuzz)
+	// #logic [generates fizzbuzz]
+	data_fizzbuzz := logic.Fizzbuzz_generator(&extractor)
 
 	// $ success response $
 	json.NewEncoder(res).Encode(data_fizzbuzz)
@@ -52,7 +52,7 @@ func Stats(res http.ResponseWriter, req *http.Request, ps httprouter.Params) {
 		return
 	}
 
-	// #usecase [generates fizzbuzz]
+	// #logic [generates fizzbuzz]
 	fizzbuzz_request_statistics := logic.Fizzbuzz_request_statistics_generator(results)
 
 	// $ success response $
