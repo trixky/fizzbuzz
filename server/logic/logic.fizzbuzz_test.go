@@ -6,7 +6,9 @@ import (
 	"fizzbuzz.com/v1/extractors"
 )
 
+// TestFizzbuzz_generator tests the Fizzbuzz_generator function
 func TestFizzbuzz_generator(t *testing.T) {
+	// incomplete... just to try
 	expected_fizzbuzz := Data_fizzbuzz{Fizzbuzz: []string{"1",
 		"2",
 		"fizz",
@@ -112,7 +114,7 @@ func TestFizzbuzz_generator(t *testing.T) {
 
 	for index, element := range expected_fizzbuzz.Fizzbuzz {
 		if element != fizzbuzz.Fizzbuzz[index] {
-			t.Errorf("fizzbuzz; want ...")
+			t.Errorf("expected: %s, result: %s", element, fizzbuzz.Fizzbuzz[index])
 		}
 	}
 }
