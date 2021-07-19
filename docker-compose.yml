@@ -10,8 +10,7 @@ services:
       POSTGRES_PORT: ${POSTGRES_PORT}
     volumes:
       - ./server:/go/src/go-with-compose
-    working_dir: /go/src/go-with-compose
-    # command: go run main.go
+    command: go run main.go
     command: go test
     depends_on:
       - postgres

@@ -4,6 +4,9 @@ RUN apk update
 RUN apk add git
 
 
+# get/install gcc for compile go tests
+RUN apk add build-base
+
 # create the project folder
 RUN mkdir /go/src/go-with-compose
 # copy the source
