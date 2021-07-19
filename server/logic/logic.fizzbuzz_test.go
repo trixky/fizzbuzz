@@ -6,7 +6,7 @@ import (
 	"fizzbuzz.com/v1/extractors"
 )
 
-// TestFizzbuzz_generator tests the Fizzbuzz_generator function
+// TestFizzbuzz_generator tests the Fizzbuzz_generator function.
 func TestFizzbuzz_generator(t *testing.T) {
 	// incomplete... just to try
 	expected_fizzbuzz := Data_fizzbuzz{Fizzbuzz: []string{"1",

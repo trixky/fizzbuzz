@@ -6,7 +6,6 @@ import (
 	"log"
 
 	"fizzbuzz.com/v1/models"
-	"fizzbuzz.com/v1/tools"
 	redis "github.com/go-redis/redis"
 	"gorm.io/driver/postgres"
 	"gorm.io/gorm"
@@ -16,9 +15,9 @@ var Postgres *gorm.DB = nil
 var Redis *redis.Client = nil
 
 // Init_postgres initializes postgres.
-// func Init_postgres(dsn string) *gorm.DB {
-func Init_postgres(env tools.Environment) *gorm.DB {
-	postgres, err := gorm.Open(postgres.Open("host="+env.Postgres_host+" user="+env.Postgres_user+" password="+env.Postgres_password+" dbname="+env.Postgres_db+" port="+env.Postgres_port+" sslmode=disable"), &gorm.Config{})
+func Init_postgres(dsn string) *gorm.DB {
+	postgres, err := gorm.Open(postgres.Open(dsn), &gorm.Config{})
+
 	if err != nil {
 		log.Fatalln("init postgres: ERROR > ", err)
 	}

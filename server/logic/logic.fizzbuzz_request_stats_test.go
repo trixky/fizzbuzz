@@ -6,7 +6,7 @@ import (
 	"fizzbuzz.com/v1/models"
 )
 
-// TestFizzbuzz_request_statistics_generator tests the Fizzbuzz_request_statistics_generator function
+// TestFizzbuzz_request_statistics_generator tests the Fizzbuzz_request_statistics_generator.function
 func TestFizzbuzz_request_statistics_generator(t *testing.T) {
 	// incomplete... just to try
 	expected_fizzbuzz_request_statistics := []models.Fizzbuzz_request_statistics{{Int1: 1, Int2: 2, Limit: 3, Str1: "fizz", Str2: "buzz"}}

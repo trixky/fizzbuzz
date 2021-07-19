@@ -17,7 +17,7 @@ import (
 
 func init() {
 	env := tools.Get_environment_variables()
-	database.Init_postgres(env)
+	database.Init_postgres(env.Get_postgres_dsn())
 	database.Init_redis()
 }
 

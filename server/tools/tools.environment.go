@@ -15,6 +15,11 @@ type Environment struct {
 	Postgres_port     string
 }
 
+// Get_postgres_dsn generates the postgres dsn from environment variables.
+func (e Environment) Get_postgres_dsn() string {
+	return "host=" + e.Postgres_host + " user=" + e.Postgres_user + " password=" + e.Postgres_password + " dbname=" + e.Postgres_db + " port=" + e.Postgres_port + " sslmode=disable"
+}
+
 // Get_environment_variables reads the environment variables
 func Get_environment_variables() Environment {
 	fmt.Println("\n\n\n=================== < INIT  SERVER > ===================")
