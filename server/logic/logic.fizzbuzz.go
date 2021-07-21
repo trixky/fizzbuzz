@@ -37,7 +37,7 @@ func Fizzbuzz_generator(extracted_fizzbuzz *extractors.Fizzbuzz) (data_fizzbuzz 
 		} else if fizzbuzzed {
 			// If it's only a multiple of int1.
 			data_fizzbuzz.Fizzbuzz[i] = extracted_fizzbuzz.Str1
-		} else if !fizzbuzzed {
+		} else {
 			// If it's not multiple of int1 or int2.
 			data_fizzbuzz.Fizzbuzz[i] = strconv.Itoa(ii)
 		}
