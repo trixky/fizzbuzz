@@ -21,6 +21,12 @@ services:
     ports:
       - "8080:8080"
 
+    # access to the server:
+    # $> docker-compose exec server sh
+    
+    # go test (only logic part):
+    # $> docker-compose exec server gp test ./logic
+
   supertest:
     build: ./supertest
     environment:

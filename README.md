@@ -29,7 +29,15 @@ Pgadmin is accessible on [localhost:5050](http://localhost:5050/).
 ![screenshot](https://raw.githubusercontent.com/trixky/fizzbuzz/main/demo/pgadmin_login.png)
 ![screenshot](https://raw.githubusercontent.com/trixky/fizzbuzz/main/demo/pgadmin_connection.png)
 
-## supertest
+## Go test
+
+The test coverage in go is skinny (only on the fizzbuzz logic part) but present.
+
+```bash
+docker-compose exec server go test ./logic
+```
+
+## Supertest
 
 The API synchronous tester is built with [supertest](https://www.npmjs.com/package/supertest)/[jest](https://jestjs.io/) on [node.js](https://nodejs.org/).
 
