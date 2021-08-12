@@ -11,7 +11,7 @@ services:
     volumes:
       - ./server:/go/src/go-with-compose
     command: go run main.go
-    command: go test
+    command: go test # ???
     depends_on:
       - postgres
       - redis
