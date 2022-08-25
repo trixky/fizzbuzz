@@ -26,8 +26,8 @@ docker-compose exec redis sh -c 'redis-cli -h redis' # to access the redis cli
 
 Pgadmin is accessible on [localhost:5050](http://localhost:5050/).
 
-![screenshot](https://raw.githubusercontent.com/trixky/fizzbuzz/main/demo/pgadmin_login.png)
-![screenshot](https://raw.githubusercontent.com/trixky/fizzbuzz/main/demo/pgadmin_connection.png)
+![screenshot](https://raw.githubusercontent.com/trixky/fizzbuzz/main/.demo/pgadmin_login.png)
+![screenshot](https://raw.githubusercontent.com/trixky/fizzbuzz/main/.demo/pgadmin_connection.png)
 
 ## Go test
 
@@ -47,4 +47,4 @@ docker-compose run --rm supertest
 
 > The test erase all data on postgresql and redis!
 
-![screenshot](https://raw.githubusercontent.com/trixky/fizzbuzz/main/demo/test.png)
+![screenshot](https://raw.githubusercontent.com/trixky/fizzbuzz/main/.demo/test.png)
